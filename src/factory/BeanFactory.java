@@ -1,30 +1,40 @@
 package factory;
 
-import domain.dao.BookDao;
+import controller.BookController;
+import controller.CartController;
+import controller.OrderController;
+import controller.UserContoller;
+import domain.dao.*;
 import service.book.BookService;
+import service.book.BookServiceImpl;
+import service.cart.CartService;
+import service.cart.CartServiceImpl;
+import service.order.OrderService;
+import service.order.OrderServiceImpl;
+import service.user.UserService;
+import service.user.UserServiceImpl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BeanFactory {
-    private BookService service;
-    private BookDao dao;
+    private ParentDao dao;
 
     public Map<String, Object> map;
     private static BeanFactory instance;
 
     private BeanFactory() {
-//        dao = new TodoOracleDao();
-//        service = new TodoService(dao);
-//
-//        map = new HashMap<>();
-//        map.put("list", new TodoReadController(service));
-//        map.put("register", new TodoInsertController(service));
-//        map.put("update", new TodoUpdateController(service));
-//        map.put("delete", new TodoDeleteController(service));
-//        map.put("read", new TodoReadController(service));
-//        map.put("checkedList", new TodoCheckedReadController(service));
-//        map.put("uncheckedList", new TodoUncheckedReadController(service));
-//        map.put("sort", new TodoSortController(service));
+        BookService bookService = new BookServiceImpl(new BookDao());
+        UserService userService = new UserServiceImpl(new UserDao());
+        CartService cartService = new CartServiceImpl(new CartDao());
+        OrderService orderService = new OrderServiceImpl(new OrderDao());
+
+        map = new HashMap<>();
+        map.put("user", new UserContoller(userService));
+        map.put("book", new BookController(bookService));
+        map.put("cart", new CartController(cartService));
+        map.put("order", new OrderController(orderService));
+
     }
 
     public static BeanFactory getInstance() {

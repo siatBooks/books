@@ -1,5 +1,4 @@
 package domain.dao;
 
-public interface BookDao {
-    int insert();
+public class BookDao extends ParentDao{
 }
