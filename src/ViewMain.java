@@ -3,18 +3,27 @@ import java.util.Scanner;
 public class ViewMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("===================온라인 서점 시스템============");
+        System.out.println(">> 로그인 >>");
+        System.out.print("성명:");
+        scanner.nextInt();
+        System.out.println();
 
-        System.out.println("> 로그인");
-        System.out.println("성명:");
+        System.out.print("비밀번호:");
         scanner.nextInt();
-        System.out.println("비밀번호:");
-        scanner.nextInt();
+        System.out.println();
 
         while (true) {
             try {
-                System.out.println("> siat book project");
-                System.out.println("1 책 검색  2 회원 정보 조회 3 내 주문 정보 조회 99 종료");
-                System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+                System.out.println("====================[홈페이지]====================");
+                System.out.println("= 1. 도서 검색   ");
+                System.out.println("= 2. 회원 정보 조회 ");
+                System.out.println("= 3. 주문 이력 확인 ");
+                System.out.println("= 4. 장바구니 보기  ");
+                System.out.println("= 99. 종료     ");
+                System.out.println("====================");
+                // System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
                 int num = scanner.nextInt();
 
                 switch (num) {
@@ -28,8 +37,20 @@ public class ViewMain {
                         System.out.println("주문 리스트");
                         System.out.println("주문 리스트");
                         break;
+                    case 4:
+                        System.out.println("주문 리스트");
+                        System.out.println("주문 리스트");
+                        System.out.println("주문 리스트");
+                        System.out.println("주문 리스트");
+                        break;
+                
                     case 99:
                         exit();
+                    
+                    // 그외 모두는 종료버튼으로 간주해보자.
+                    default:
+                        exit();
+                        break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -44,8 +65,10 @@ public class ViewMain {
         if (str.equals("y")) {
             System.exit(0);
         } else if (str.equals("n")) {
+            System.out.println("\n\n\n\n\n");
             System.out.println("초기 화면으로 돌아갑니다.");
         } else {
+            System.out.println("\n\n\n\n\n");
             System.out.println("입력이 잘못 되었습니다. 초기 화면으로 돌아갑니다.");
         }
     }
