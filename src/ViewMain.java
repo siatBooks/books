@@ -107,28 +107,53 @@ public class ViewMain {
     private static void search() {
         while (true) {
             try {
-                System.out.println("검색유형을 선택해주세요 : ");
-                System.out.println("1 베스트셀러 검색  2 신간 검색 3 전체 검색 4 상위메뉴 이동 99 종료");
+                
+                System.out.println("[검색 유형[v]]");
+                System.out.println("|-1 베스트셀러 검색");
+                System.out.println("|-2 신간 검색");
+                System.out.println("|-3 전체 검색");
+                System.out.println("|-4 상위메뉴 이동");
+                System.out.println("|-99 종료");
+                                    
                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
 
-                System.out.println("> 서적 검색");
-                System.out.println("검색어를 입력해주세요 : ");
-                System.out.println("> 서적 리스트1");
-                System.out.println("> 서적 리스트2");
-                System.out.println("> 서적 리스트3");
-                System.out.println("> 서적 리스트4");
-                System.out.println("정렬을 선택해주세요 : ");
-                System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 구매 순위 4 선택 99 종료");
-
                 Scanner scanner = new Scanner(System.in);
+                System.out.println("> 서적 검색 ");
+                System.out.print("검색어를 입력해주세요 : ");
+                String searchContents = scanner.nextLine();
+                System.out.println();
+
+                System.out.println("검색유형을 선택해주세요 : ");
                 int num = scanner.nextInt();
+                
+
+                
+                
+                // System.out.println("검색유형을 선택해주세요 : ");
+                // System.out.println("1 베스트셀러 검색  2 신간 검색 3 전체 검색 4 상위메뉴 이동 99 종료");
+                // System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+
+                // System.out.println("> 서적 검색");
+                // System.out.println("검색어를 입력해주세요 : ");
+                // System.out.println("> 서적 리스트1");
+                // System.out.println("> 서적 리스트2");
+                // System.out.println("> 서적 리스트3");
+                // System.out.println("> 서적 리스트4");
+                // System.out.println("정렬을 선택해주세요 : ");
+                // System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 구매 순위 4 선택 99 종료");
+
+                
 
                 switch (num) {
-                    case 1:
+                    case 1: // 베스트 셀러
+                        searchResult();
+                        
                         break;
-                    case 2:
+                    case 2: // 신간
+                        searchResult();
                         break;
-                    case 3:
+                    case 3: // 전체
+                        searchResult();
                         return;
                     case 4:
                         detail();
@@ -139,6 +164,41 @@ public class ViewMain {
                 e.printStackTrace();
             }
         }
+
+    }
+    // 각각 나눠야하나?
+
+    private static void searchResult() {
+        System.out.println("====================[검색결과페이지]====================");
+        System.out.println("= 검색어:    " + "{서적명}");
+        System.out.println("= 검색 유형:    " + "{전체 검색}"); // 해당 내용에 데이터가 들어가야한다.
+        System.out.println("= 정렬 유형:    " + "{기본은 문자 오름차순 정렬}"); // 해당 내용에 데이터가 들어가야한다.
+        System.out.println("====================");
+
+        System.out.println("검색어를 입력해주세요 : ");
+        System.out.println("서적 리스트1");
+        System.out.println("> {1번째 책 제목}");
+        System.out.println("> {북타입: Ebook}");
+        System.out.println("> {판매가: 18000원} ");
+
+        System.out.println("서적 리스트2");
+        System.out.println("> {2번째 책 제목}");
+        System.out.println("> {북타입: book}");
+        System.out.println("> {판매가: 26000원} ");
+        
+        System.out.println("서적 리스트3");
+        System.out.println("> {3번째 책 제목}");
+        System.out.println("> {북타입: book}");
+        System.out.println("> {판매가: 21000원} ");
+        
+        System.out.println("서적 리스트4");
+        System.out.println("> {3번째 책 제목}");
+        System.out.println("> {북타입: book}");
+        System.out.println("> {판매가: 12000원} ");
+        
+        System.out.println("정렬을 선택해주세요 : ");
+        System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 구매 순위 4 선택 99 종료");
+        System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
 
     }
     private static void detail() {
@@ -213,4 +273,14 @@ public class ViewMain {
             }
         }
     }
+}
+
+
+private static void allPageOption() { // return 값을 주는게 좋아보이는데
+    System.out.println("> {3번째 책 제목}");
+    System.out.println("> {북타입: book}");
+    System.out.println("> {판매가: 21000원} ");
+    System.out.println("> {3번째 책 제목}");
+    System.out.println("> {북타입: book}");
+    System.out.println("> {판매가: 21000원} ");
 }
