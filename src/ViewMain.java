@@ -267,13 +267,16 @@ public class ViewMain {
 
                 switch (num) {
                     case 1:
-                        System.out.println("서적 상태 선택: ");
-                        System.out.println("1 최상 2 상 3 중");
-                        int i = scanner.nextInt();
-                        System.out.println("수량 입력");
-                        int j = scanner.nextInt();
+                        System.out.println("장바구니에 담기");
+                        System.out.println("장바구니 보기 페이지로 이동 ");
 
-                        System.out.println("장바구니에 담겼습니다");
+                        // System.out.println("서적 상태 선택: ");
+                        // System.out.println("1 최상 2 상 3 중");
+                        // int i = scanner.nextInt();
+                        // System.out.println("수량 입력");
+                        // int j = scanner.nextInt();
+
+                        // System.out.println("장바구니에 담겼습니다");
                         break;
                     case 2:
                         System.out.println("서적 상태 선택: ");
@@ -324,6 +327,10 @@ public class ViewMain {
             }
         }
     }
+    private static void cart(){
+        System.out.println("원하시는 번호를 선택하세요 : ");
+        System.out.println("1 장바구니 담기  2 해당 서적 바로 구매 0.홈페이지  99.  종료");
+    }
     private static void allPageOption() { // return 값을 주는게 좋아보이는데
         System.out.println("====================[그외]====================");
         System.out.println("> 0. 홈페이지");
@@ -347,5 +354,6 @@ public class ViewMain {
 
     }
 }
+
 
 
