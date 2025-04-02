@@ -424,6 +424,11 @@
 
 
 
+
+// ----------------------------------------------------- // 
+
+// 초안
+
 import java.util.Scanner;
 
 public class ViewMain {
@@ -515,7 +520,7 @@ public class ViewMain {
                 System.out.println("원하시는 번호를 선택하세요 : ");
                 
                 System.out.println("\n");
-                System.out.println("1 회원 정보 수정  2 상위 메뉴 이동 0 홈페이지 돌아가기 99 종료");
+                System.out.println("1 회원 정보 수정  2 이전으로 바로가기 0 홈페이지 돌아가기 99 종료");
                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
                 System.out.println("\n\n\n");
                 
@@ -525,6 +530,7 @@ public class ViewMain {
 
                 switch (num) {
                     case 0:
+                        home();
                         return; // 홈페이지로 복귀
                     case 1:
                         System.out.println("회원 정보 수정");
@@ -578,6 +584,7 @@ public class ViewMain {
                 
                 switch (num) {
                     case 0:
+                        home();
                         return; // 홈페이지로 복귀
                     case 1: // 베스트 셀러
                         searchResult("bstseller", searchContents, scanner);
@@ -649,6 +656,7 @@ public class ViewMain {
         
         switch (num) {
             case 0:
+                home();
                 return; // 홈페이지로 복귀
             case 1: // 원하는 도서 선택
                 detail(scanner);
@@ -699,10 +707,11 @@ public class ViewMain {
 
             switch (num) {
                 case 0:
+                    home();
                     return; // 홈페이지로 복귀
                 case 1:
                     System.out.println("장바구니에 담기");
-                    System.out.print("서적 상태 선택(1:최상 2:상 3:중): ");
+                    System.out.print("서적 상태 선택(1:최상 2:상 3:중 4.하): ");
                     int state = scanner.nextInt();
                     scanner.nextLine(); // 버퍼 비우기
                     
@@ -714,7 +723,7 @@ public class ViewMain {
                     cart(scanner);
                     break;
                 case 2:
-                    System.out.print("서적 상태 선택(1:최상 2:상 3:중): ");
+                    System.out.print("서적 상태 선택(1:최상 2:상 3:중 4.하): ");
                     int state1 = scanner.nextInt();
                     scanner.nextLine(); // 버퍼 비우기
                     
@@ -760,6 +769,7 @@ public class ViewMain {
 
             switch (num) {
                 case 0:
+                    home();
                     return; // 홈페이지로 복귀
                 case 1:
                     System.out.println("주문을 진행합니다...");
@@ -783,7 +793,7 @@ public class ViewMain {
 
     private static void sort(Scanner scanner) {
         System.out.println("정렬을 선택해주세요 : ");
-        System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 구매 순위 4 가격순 0 홈페이지 99 종료");
+        System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 가격순 0 홈페이지 99 종료"); // 구매 순위 4 
         
         System.out.print("선택: ");
         int num = scanner.nextInt();
@@ -791,6 +801,7 @@ public class ViewMain {
         
         switch (num) {
             case 0:
+                home();
                 return; // 홈으로 돌아가기
             case 1:
                 System.out.println("베스트셀러 순위로 정렬합니다.");
@@ -799,9 +810,6 @@ public class ViewMain {
                 System.out.println("리뷰 순위로 정렬합니다.");
                 break;
             case 3:
-                System.out.println("구매 순위로 정렬합니다.");
-                break;
-            case 4:
                 System.out.println("가격순으로 정렬합니다.");
                 break;
             case 8:
@@ -819,8 +827,8 @@ public class ViewMain {
     private static void cart(Scanner scanner) {
         System.out.println("> 장바구니 페이지");
         System.out.println("=====================");
-        System.out.println("1. 자바 프로그래밍 (최상) - 1권 - 25000원");
-        System.out.println("2. 스프링 부트 가이드 (상) - 2권 - 40000원");
+        System.out.println("1. 자바 프로그래밍 (최상) - 1권 - 25000원"); // 해당 부분 수정이 필요! -> 업데이트된 책이름과 권수 및 가격이 나와야한다.(db 연동후)
+        System.out.println("2. 스프링 부트 가이드 (상) - 2권 - 40000원"); // 해당 부분 수정이 필요! -> (이하 동일)
         System.out.println("=====================");
         System.out.println("총액: 65000원");
         System.out.println("1. 전체 구매 2. 선택 구매 3. 장바구니 비우기 0.홈페이지 99.종료");
@@ -831,6 +839,7 @@ public class ViewMain {
         
         switch (num) {
             case 0:
+                home();
                 return; // 홈페이지로 복귀
             case 1:
                 System.out.println("전체 상품을 구매합니다.");
@@ -856,3 +865,4 @@ public class ViewMain {
         }
     }
 }
+
