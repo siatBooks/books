@@ -513,8 +513,11 @@ public class ViewMain {
                 System.out.println("> 유저 정보 리스트");
                 System.out.println("> 유저 정보 리스트");
                 System.out.println("원하시는 번호를 선택하세요 : ");
+                
+                System.out.println("\n");
                 System.out.println("1 회원 정보 수정  2 상위 메뉴 이동 0 홈페이지 돌아가기 99 종료");
                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+                System.out.println("\n\n\n");
                 
                 System.out.print("선택: ");
                 int num = scanner.nextInt();
