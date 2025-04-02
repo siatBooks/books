@@ -551,6 +551,8 @@ public class ViewMain {
     private static void search(Scanner scanner) {
         while (true) {
             try {
+                System.out.println("\n\n");
+                System.out.println("====================[도서 검색]====================");
                 System.out.println("[검색 유형[v]]");
                 
                 System.out.println("|-1 베스트셀러 검색");
@@ -562,6 +564,7 @@ public class ViewMain {
                 System.out.println("|-99 종료");
                 System.out.println();
                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+                System.out.println("====================");
 
                 System.out.println("> 서적 검색 ");
                 System.out.print("검색어를 입력해주세요: ");
@@ -569,7 +572,6 @@ public class ViewMain {
                 System.out.println();
 
                 System.out.print("검색유형을 선택해주세요: ");
-                System.out.println("\n\n\n");
 
                 int num = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
@@ -621,6 +623,7 @@ public class ViewMain {
         System.out.println("= 검색 유형: " + searchType);
         System.out.println("= 정렬 유형: 기본(문자 오름차순 정렬)");
         System.out.println("====================");
+        System.out.println("\n\n");
 
         // 검색 결과 예시 출력 -> 반복 구문이 있어야겠죠?
         // 📖📓📚📑🔍🖋✏🖍📆📝🗓📌📌⌛⏰ 💰💵💶💸 💨💫💬 🗝📟📞🖥💻🛒
@@ -629,6 +632,7 @@ public class ViewMain {
         System.out.println("📝 {1번째 책 저자}");
         System.out.println("📌 {북타입: Ebook}");
         System.out.println("💸 {판매가: 18000원} ");
+        System.out.println("====================");
 
         System.out.println("[액션을 선택해주세요[v]]");
         System.out.println("|-1 📚원하는 도서 선택 ");
@@ -637,8 +641,9 @@ public class ViewMain {
         System.out.println("|-0 🏠 홈페이지로 돌아가기");
         System.out.println("|-8 🛒 장바구니");
         System.out.println("|-99 ⏹ 종료");
-        
-        System.out.print("선택: ");
+        System.out.println("====================");
+
+        System.out.print("액션 선택: ");
         int num = scanner.nextInt();
         scanner.nextLine(); // 버퍼 비우기
         
