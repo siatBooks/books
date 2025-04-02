@@ -1,9 +1,8 @@
 package factory;
 
 import domain.dao.BookDao;
-import service.BookService;
+import service.book.BookService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class BeanFactory {

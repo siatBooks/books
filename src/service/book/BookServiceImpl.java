@@ -1,11 +1,16 @@
-package service;
+package service.book;
+
+import domain.dto.cart.CartInsertRequestDto;
+import domain.dto.cart.CartUpdateRequestDto;
+import domain.dto.order.OrderSheetUpdateDto;
+import domain.dto.user.UserInfoUpdateRequestDto;
 
 import java.util.List;
-import java.util.Map;
 
 public class BookServiceImpl implements BookService {
+
     @Override
-    public int login() {
+    public int login(String loginId, int password) {
         return 0;
     }
 
@@ -15,7 +20,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int updateUserInfo(int userId, Map fieldMap) {
+    public int updateUserInfo(int userId, UserInfoUpdateRequestDto dto) {
         return 0;
     }
 
@@ -45,12 +50,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int insertCart(Map dto) {
+    public int insertCart(CartInsertRequestDto dto) {
         return 0;
     }
 
     @Override
-    public int updateCart(Map dto) {
+    public int updateCart(CartUpdateRequestDto dto) {
         return 0;
     }
 
@@ -65,7 +70,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int updateOrder(Map dto) {
+    public int updateOrder(OrderSheetUpdateDto dto) {
         return 0;
     }
 }

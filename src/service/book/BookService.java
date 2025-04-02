@@ -1,19 +1,23 @@
-package service;
+package service.book;
+
+import domain.dto.cart.CartInsertRequestDto;
+import domain.dto.cart.CartUpdateRequestDto;
+import domain.dto.order.OrderSheetUpdateDto;
+import domain.dto.user.UserInfoUpdateRequestDto;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BookService {
     // 계정
 
     // 로그인
-    int login();
+    int login(String loginId, int password);
 
     // 유저 정보 조회
     List selectUserInfo(int userId);
 
     // 유저 정보 수정
-    int updateUserInfo(int userId, Map fieldMap);
+    int updateUserInfo(int userId, UserInfoUpdateRequestDto dto);
 
     // 검색
 
@@ -35,10 +39,10 @@ public interface BookService {
     List selectCart(int userId);
 
     // 장바구니에 담기
-    int insertCart(Map dto);
+    int insertCart(CartInsertRequestDto dto);
 
     // 장바구니 수정
-    int updateCart(Map dto);
+    int updateCart(CartUpdateRequestDto dto);
 
     // 장바구니 비우기
     int deleteCart(int userId);
@@ -49,5 +53,5 @@ public interface BookService {
     List selectOrder(int userId);
 
     // 주문서 수정
-    int updateOrder(Map dto);
+    int updateOrder(OrderSheetUpdateDto dto);
 }
