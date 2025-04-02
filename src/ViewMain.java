@@ -116,8 +116,8 @@ public class ViewMain {
                 System.out.println("|-1 베스트셀러 검색");
                 System.out.println("|-2 신간 검색");
                 System.out.println("|-3 전체 검색");
-                System.out.println("|-4 상위메뉴 이동");
-                System.out.println("|-99 종료");
+                allPageOption(); // 나머지 옵션
+
                                     
                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
 
@@ -129,38 +129,23 @@ public class ViewMain {
 
                 System.out.println("검색유형을 선택해주세요 : ");
                 int num = scanner.nextInt();
-                
 
                 
-                
-                // System.out.println("검색유형을 선택해주세요 : ");
-                // System.out.println("1 베스트셀러 검색  2 신간 검색 3 전체 검색 4 상위메뉴 이동 99 종료");
-                // System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
-
-                // System.out.println("> 서적 검색");
-                // System.out.println("검색어를 입력해주세요 : ");
-                // System.out.println("> 서적 리스트1");
-                // System.out.println("> 서적 리스트2");
-                // System.out.println("> 서적 리스트3");
-                // System.out.println("> 서적 리스트4");
-                // System.out.println("정렬을 선택해주세요 : ");
-                // System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 구매 순위 4 선택 99 종료");
-
-                
-
                 switch (num) {
                     case 1: // 베스트 셀러
-                        searchResult();
-                        
+                        searchResult("bstseller", searchContents); // 매개변수로 줘야될듯하다...
                         break;
                     case 2: // 신간
-                        searchResult();
+                        searchResult("newseller", searchContents); // 매개변수로 줘야될듯하다...
                         break;
                     case 3: // 전체
-                        searchResult();
-                        return;
-                    case 4:
-                        detail();
+                        searchResult("all", searchContents); // 매개변수로 줘야될듯하다...
+                        break;
+                    case 0:
+                        // detail();
+                        System.out.println("홈페이지로 이동합니다.");
+                        home();
+                        break;
                     case 99:
                         exit();
                 }
@@ -170,9 +155,24 @@ public class ViewMain {
         }
 
     }
-    // 각각 나눠야하나?
+    // 정렬하는 기준을 각각 나눠야하나?
+    private static void searchResult(String searchType, String searchContents) { // 상수값을 토대로 넣는 것도 좋은 방법!
 
-    private static void searchResult() {
+        if (searchType.equals("bstseller")) {
+            System.out.println("베스트셀러 검색 결과입니다.");
+            // 데이터셋 받는다.
+        } else if (searchType.equals("newseller")) {
+            System.out.println("신간 검색 결과입니다.");
+            // 데이터셋 받는다.
+        } else if (searchType.equals("all")) {
+            System.out.println("전체 검색 결과입니다.");
+            // 데이터셋 받는다.
+        } else {
+            System.out.println("잘못된 검색어입니다.");
+            return;
+        }
+
+        // 받은 데이터셋으로 뿌려준다.
         System.out.println("====================[검색결과페이지]====================");
         System.out.println("= 검색어:    " + "{서적명}");
         System.out.println("= 검색 유형:    " + "{전체 검색}"); // 해당 내용에 데이터가 들어가야한다.
@@ -226,7 +226,7 @@ public class ViewMain {
                 search();
                 break;
             case 3: // 재정렬
-                sortAgain();
+                sort();
                 break;
             case 0:
                 home();
@@ -239,7 +239,7 @@ public class ViewMain {
                 break;
         }
     }
-    private static void detail() {
+    private static void detail() { // 책정보가 내려오거나 무슨 방법이 필요..
         while (true) {
             try {
 
@@ -261,7 +261,8 @@ public class ViewMain {
                 System.out.println("=====================");
 
                 System.out.println("원하시는 번호를 선택하세요 : ");
-                System.out.println("1 장바구니 담기  2 해당 서적 바로 구매 0.홈페이지  99.  종료");
+                System.out.println("1 장바구니 담기  2 해당 서적 바로 구매");
+                allPageOption(); // 나머지 옵션
                 Scanner scanner = new Scanner(System.in);
                 int num = scanner.nextInt();
 
@@ -269,24 +270,23 @@ public class ViewMain {
                     case 1:
                         System.out.println("장바구니에 담기");
                         System.out.println("장바구니 보기 페이지로 이동 ");
-                        cart();
 
-                        // System.out.println("서적 상태 선택: ");
-                        // System.out.println("1 최상 2 상 3 중");
-                        // int i = scanner.nextInt();
-                        // System.out.println("수량 입력");
-                        // int j = scanner.nextInt();
-
-                        // System.out.println("장바구니에 담겼습니다");
+                        System.out.println("서적 상태 선택: ");
+                        System.out.println("1 최상 2 상 3 중");
+                        int state = scanner.nextInt();
+                        System.out.println("수량 입력");
+                        int amounts = scanner.nextInt();
+                        cart(); // 카드에 담기 : 데이터도 당연히 필요할 것이다.
                         break;
                     case 2:
                         System.out.println("서적 상태 선택: ");
                         System.out.println("1 최상 2 상 3 중");
-                        int k = scanner.nextInt();
+                        int state1 = scanner.nextInt();
                         System.out.println("수량 입력");
-                        int l= scanner.nextInt();
+                        int amounts1 = scanner.nextInt();
 
-                        order(); // ?
+                        order(); // ? 주문하기 페이지로 이동
+
 
                         break;
                     case 0:
@@ -307,7 +307,7 @@ public class ViewMain {
             try {
                 System.out.println("> 주문 페이지");
                 System.out.println("캡슐 문장");
-                System.out.println("1 주문 2 상위 메뉴 이동 99 종료");
+                System.out.println("1 주문 0. 홈페이지 이동 99 종료");
                 System.out.println("원하시는 번호를 선택하세요 : ");
 
                 Scanner scanner = new Scanner(System.in);
@@ -315,19 +315,53 @@ public class ViewMain {
 
                 switch (num) {
                     case 0:
-
+                        home();
+                        break;
                     case 1:
+                    // 실제로 받는 건 아직...
                         System.out.println("주문 중입니다");
                         System.out.println("주문이 완료되었습니다");
+                        // 내주문 정보 조회
                         break;
-                    case 2:
-                        return;
                     case 99:
                         exit();
+                        break;
+                    default:
+                        break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private static void sort() {
+        System.out.println("정렬을 선택해주세요 : ");
+        System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 구매 순위 4 선택 99 종료");
+        System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        
+        switch (num) {
+            case 1:
+                System.out.println("베스트셀러 순위로 정렬합니다.");
+                break;
+            case 2:
+                System.out.println("리뷰 순위로 정렬합니다.");
+                break;
+            case 3:
+                System.out.println("구매 순위로 정렬합니다.");
+                break;
+            case 4:
+                System.out.println("선택한 서적을 구매합니다.");
+                break;
+            case 99:
+                exit();
+                break;
+            default:
+                exit();
+                break;
         }
     }
     private static void cart(){
