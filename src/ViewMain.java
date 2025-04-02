@@ -530,7 +530,7 @@ public class ViewMain {
 
                 switch (num) {
                     case 0:
-                        home();
+                        home(scanner);
                         return; // 홈페이지로 복귀
                     case 1:
                         System.out.println("회원 정보 수정");
@@ -584,7 +584,7 @@ public class ViewMain {
                 
                 switch (num) {
                     case 0:
-                        home();
+                        home(scanner);
                         return; // 홈페이지로 복귀
                     case 1: // 베스트 셀러
                         searchResult("bstseller", searchContents, scanner);
@@ -656,7 +656,7 @@ public class ViewMain {
         
         switch (num) {
             case 0:
-                home();
+                home(scanner);
                 return; // 홈페이지로 복귀
             case 1: // 원하는 도서 선택
                 detail(scanner);
@@ -707,7 +707,7 @@ public class ViewMain {
 
             switch (num) {
                 case 0:
-                    home();
+                    home(scanner);
                     return; // 홈페이지로 복귀
                 case 1:
                     System.out.println("장바구니에 담기");
@@ -769,7 +769,7 @@ public class ViewMain {
 
             switch (num) {
                 case 0:
-                    home();
+                    home(scanner);
                     return; // 홈페이지로 복귀
                 case 1:
                     System.out.println("주문을 진행합니다...");
@@ -801,7 +801,7 @@ public class ViewMain {
         
         switch (num) {
             case 0:
-                home();
+                home(scanner);
                 return; // 홈으로 돌아가기
             case 1:
                 System.out.println("베스트셀러 순위로 정렬합니다.");
@@ -839,7 +839,7 @@ public class ViewMain {
         
         switch (num) {
             case 0:
-                home();
+                home(scanner);
                 return; // 홈페이지로 복귀
             case 1:
                 System.out.println("전체 상품을 구매합니다.");
