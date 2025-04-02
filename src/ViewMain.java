@@ -269,6 +269,7 @@ public class ViewMain {
                     case 1:
                         System.out.println("장바구니에 담기");
                         System.out.println("장바구니 보기 페이지로 이동 ");
+                        cart();
 
                         // System.out.println("서적 상태 선택: ");
                         // System.out.println("1 최상 2 상 3 중");
@@ -285,11 +286,13 @@ public class ViewMain {
                         System.out.println("수량 입력");
                         int l= scanner.nextInt();
 
-                        order();
+                        order(); // ?
 
                         break;
-                    case 3:
-                        return;
+                    case 0:
+                        System.out.println("홈페이지로 이동합니다.");
+                        home();
+                        break;
                     case 99:
                         exit();
                 }
@@ -329,26 +332,55 @@ public class ViewMain {
     }
     private static void cart(){
         System.out.println("원하시는 번호를 선택하세요 : ");
-        System.out.println("1 장바구니 담기  2 해당 서적 바로 구매 0.홈페이지  99.  종료");
+        System.out.println("1. 구매 0.홈페이지  99.  종료");
+
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        
+        switch (num) {
+            case 0:
+                System.out.println("홈페이지로 이동합니다.");
+                home();
+                break;
+            case 1:
+                System.out.println("구매");
+                // 구매 함수 작성 필요
+                break;
+            case 99:
+                System.out.println("종료합니다.");
+                exit();
+                break;
+            default:
+                System.out.println("잘못된 입력입니다.");
+                exit();
+                break;
+        }
+
+
+
     }
     private static void allPageOption() { // return 값을 주는게 좋아보이는데
         System.out.println("====================[그외]====================");
         System.out.println("> 0. 홈페이지");
         System.out.println("= 99. 종료     ");
         System.out.println("====================");        
-        
+
+
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
-
+        
         switch (num) {
             case 1:
                 System.out.println("홈페이지로 이동합니다.");
+                home();
                 break;
             case 2:
                 System.out.println("종료합니다.");
+                exit();
                 break;
             default:
                 System.out.println("잘못된 입력입니다.");
+                exit();
                 break;
         }
 
