@@ -1,7 +1,53 @@
 package service;
 
-public interface BookService {
-    int insert();
+import java.util.List;
+import java.util.Map;
 
-    int update();
+public interface BookService {
+    // 계정
+
+    // 로그인
+    int login();
+
+    // 유저 정보 조회
+    List selectUserInfo(int userId);
+
+    // 유저 정보 수정
+    int updateUserInfo(int userId, Map fieldMap);
+
+    // 검색
+
+    // 전체 검색
+    List selectBookList(String keyword);
+
+    // 베스트셀러 검색
+    List selectBookListInBest(String keyword);
+
+    // 신작 검색
+    List selectBookListInNew(String keyword);
+
+    // 상세보기
+    List selectBookDetail(int bookId);
+
+    // 장바구니
+
+    // 장바구니 보기
+    List selectCart(int userId);
+
+    // 장바구니에 담기
+    int insertCart(Map dto);
+
+    // 장바구니 수정
+    int updateCart(Map dto);
+
+    // 장바구니 비우기
+    int deleteCart(int userId);
+
+    // 주문
+
+    // 이전 주문 내역 확인
+    List selectOrder(int userId);
+
+    // 주문서 수정
+    int updateOrder(Map dto);
 }
