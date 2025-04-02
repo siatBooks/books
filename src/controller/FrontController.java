@@ -8,4 +8,6 @@ public class FrontController {
     public FrontController() {
         factory = BeanFactory.getInstance();
     }
+
+
 }
