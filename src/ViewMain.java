@@ -429,20 +429,480 @@
 
 // 초안
 
+// import java.util.Scanner;
+
+// public class ViewMain {
+//     public static void main(String[] args) {
+//         Scanner scanner = new Scanner(System.in);
+        
+//         System.out.println("===================온라인 서점 시스템============");
+//         System.out.println(">> 로그인 >>");
+//         System.out.print("성명: ");
+//         String name = scanner.nextLine();
+//         System.out.println();
+
+//         System.out.print("비밀번호: ");
+//         String password = scanner.nextLine();
+//         System.out.println();
+
+//         home(scanner);
+//     }
+
+//     private static void home(Scanner scanner) {
+//         while (true) {
+//             try {
+//                 System.out.println("====================[홈페이지]====================");
+//                 System.out.println("= 1. 도서 검색   ");
+//                 System.out.println("= 2. 회원 정보 조회 ");
+//                 System.out.println("= 3. 주문 이력 확인 ");
+//                 System.out.println("= 4. 장바구니 보기  ");
+//                 System.out.println("= 99. 종료     ");
+//                 System.out.println("====================");
+//                 System.out.println();
+
+//                 System.out.print("메뉴 선택: ");
+//                 System.out.println();
+                
+//                 int num = scanner.nextInt();
+//                 scanner.nextLine(); // 버퍼 비우기
+
+//                 switch (num) {
+//                     case 1:
+//                         search(scanner); 
+//                         break;
+//                     case 2:
+//                         user(scanner); 
+//                         break;
+//                     case 3:
+//                         System.out.println("주문 리스트");
+//                         System.out.println("주문 리스트");
+//                         System.out.println("주문 리스트");
+//                         System.out.println("주문 리스트");
+//                         break;
+//                     case 4:
+//                         cart(scanner); 
+//                         break;
+//                     case 99:
+//                         exit(scanner);
+//                         break;
+//                     default:
+//                         System.out.println("잘못된 입력입니다. 초기 화면으로 돌아갑니다.");
+//                         break;
+//                 }
+//             } catch (Exception e) {
+//                 System.out.println("오류가 발생했습니다: " + e.getMessage());
+//                 scanner.nextLine(); // 입력 버퍼 비우기
+//             }
+//         }
+//     }
+
+//     private static void exit(Scanner scanner) {
+//         System.out.println("시스템 종료? (y/n)");
+//         String str = scanner.nextLine();
+
+//         if (str.equalsIgnoreCase("y")) {
+//             System.out.println("시스템을 종료합니다. 감사합니다.");
+//             System.exit(0);
+//         } else {
+//             System.out.println("\n\n\n");
+//             System.out.println("초기 화면으로 돌아갑니다.");
+//         }
+//     }
+
+//     private static void user(Scanner scanner) {
+//         while (true) {
+//             try {
+//                 System.out.println("> 유저 정보 조회");
+//                 System.out.println("> 유저 정보 리스트");
+//                 System.out.println("> 유저 정보 리스트");
+//                 System.out.println("> 유저 정보 리스트");
+//                 System.out.println("> 유저 정보 리스트");
+//                 System.out.println("원하시는 번호를 선택하세요 : ");
+                
+//                 System.out.println("\n");
+//                 System.out.println("1 회원 정보 수정  2 이전으로 바로가기 0 홈페이지 돌아가기 99 종료");
+//                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+//                 System.out.println("\n\n\n");
+                
+//                 System.out.print("선택: ");
+//                 int num = scanner.nextInt();
+//                 scanner.nextLine(); // 버퍼 비우기
+
+//                 switch (num) {
+//                     case 0:
+//                         home(scanner);
+//                         return; // 홈페이지로 복귀
+//                     case 1:
+//                         System.out.println("회원 정보 수정");
+//                         break;
+//                     case 2:
+//                         return; // 상위 메뉴로 이동
+//                     case 8:
+//                         cart(scanner);
+//                         return;
+//                     case 99:
+//                         exit(scanner);
+//                         break;
+//                     default:
+//                         System.out.println("잘못된 입력입니다.");
+//                         break;
+//                 }
+//             } catch (Exception e) {
+//                 System.out.println("오류가 발생했습니다: " + e.getMessage());
+//                 scanner.nextLine(); // 버퍼 비우기
+//             }
+//         }
+//     }
+
+//     private static void search(Scanner scanner) {
+//         while (true) {
+//             try {
+//                 System.out.println("\n\n");
+//                 System.out.println("====================[도서 검색]====================");
+//                 System.out.println("[검색 유형[v]]");
+                
+//                 System.out.println("|-1 베스트셀러 검색");
+//                 System.out.println("|-2 신간 검색");
+//                 System.out.println("|-3 전체 검색");
+
+//                 System.out.println();
+//                 System.out.println("|-0 홈페이지로 돌아가기");
+//                 System.out.println("|-99 종료");
+//                 System.out.println();
+//                 System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
+//                 System.out.println("====================");
+
+//                 System.out.println("> 서적 검색 ");
+//                 System.out.print("검색어를 입력해주세요: ");
+//                 String searchContents = scanner.nextLine();
+//                 System.out.println();
+
+//                 System.out.print("검색유형을 선택해주세요: ");
+
+//                 int num = scanner.nextInt();
+//                 scanner.nextLine(); // 버퍼 비우기
+                
+//                 switch (num) {
+//                     case 0:
+//                         home(scanner);
+//                         return; // 홈페이지로 복귀
+//                     case 1: // 베스트 셀러
+//                         searchResult("bstseller", searchContents, scanner);
+//                         break;
+//                     case 2: // 신간
+//                         searchResult("newseller", searchContents, scanner);
+//                         break;
+//                     case 3: // 전체
+//                         searchResult("all", searchContents, scanner);
+//                         break;
+//                     case 8:
+//                         cart(scanner);
+//                         return;
+//                     case 99:
+//                         exit(scanner);
+//                         break;
+//                     default:
+//                         System.out.println("잘못된 입력입니다.");
+//                         break;
+//                 }
+//             } catch (Exception e) {
+//                 System.out.println("오류가 발생했습니다: " + e.getMessage());
+//                 scanner.nextLine(); // 버퍼 비우기
+//             }
+//         }
+//     }
+
+//     private static void searchResult(String searchType, String searchContents, Scanner scanner) {
+//         if (searchType.equals("bstseller")) {
+//             System.out.println("베스트셀러 검색 결과입니다.");
+//         } else if (searchType.equals("newseller")) {
+//             System.out.println("신간 검색 결과입니다.");
+//         } else if (searchType.equals("all")) {
+//             System.out.println("전체 검색 결과입니다.");
+//         } else {
+//             System.out.println("잘못된 검색어입니다.");
+//             return;
+//         }
+
+//         // 검색 결과 표시
+//         System.out.println("====================[검색결과페이지]====================");
+//         System.out.println("= 검색어: " + searchContents);
+//         System.out.println("= 검색 유형: " + searchType);
+//         System.out.println("= 정렬 유형: 기본(문자 오름차순 정렬)");
+//         System.out.println("====================");
+//         System.out.println("\n\n");
+
+//         // 검색 결과 예시 출력 -> 반복 구문이 있어야겠죠?
+//         // 📖📓📚📑🔍🖋✏🖍📆📝🗓📌📌⌛⏰ 💰💵💶💸 💨💫💬 🗝📟📞🖥💻🛒
+//         System.out.println("📗 [서적 리스트1] ");
+//         System.out.println("📓 {1번째 책 제목} ");
+//         System.out.println("📝 {1번째 책 저자}");
+//         System.out.println("📌 {북타입: Ebook}");
+//         System.out.println("💸 {판매가: 18000원} ");
+//         System.out.println("====================");
+
+//         System.out.println("[액션을 선택해주세요[v]]");
+//         System.out.println("|-1 📚원하는 도서 선택 ");
+//         System.out.println("|-2 🔍도서 재검색");
+//         System.out.println("|-3 재정렬💨");
+//         System.out.println("|-0 🏠 홈페이지로 돌아가기");
+//         System.out.println("|-8 🛒 장바구니");
+//         System.out.println("|-99 ⏹ 종료");
+//         System.out.println("====================");
+
+//         System.out.print("액션 선택: ");
+//         int num = scanner.nextInt();
+//         scanner.nextLine(); // 버퍼 비우기
+        
+//         switch (num) {
+//             case 0:
+//                 home(scanner);
+//                 return; // 홈페이지로 복귀
+//             case 1: // 원하는 도서 선택
+//                 detail(scanner);
+//                 break;
+//             case 2: // 재검색 - 스택 오버플로우 방지를 위해 return
+//                 search(scanner);
+//                 break;
+//             case 3: // 재정렬
+//                 sort(scanner);
+//                 break;
+//             case 8:
+//                 cart(scanner);
+//                 break;
+//             case 99:
+//                 exit(scanner);
+//                 break; 
+//             default:
+//                 System.out.println("잘못된 입력입니다.");
+//                 break;
+//         }
+//     }
+
+//     private static void detail(Scanner scanner) {
+//         try {
+//             System.out.println("> 책 상세 정보");
+//             System.out.println("=====================");
+//             System.out.println("- 서적명: 자바 프로그래밍");
+//             System.out.println("- 저자: 홍길동");
+//             System.out.println("- 출판사: 코딩출판사");
+//             System.out.println("- 출판일: 2023-01-01");
+//             System.out.println("=====================");
+//             System.out.println();
+
+//             System.out.println("> 중고 서적 가격표");
+//             System.out.println("=====================");
+//             System.out.println("- 최상 (5) : 25000원");
+//             System.out.println("- 상 (3) : 20000원");
+//             System.out.println("- 중 (7) : 15000원");
+//             System.out.println("- 하 (2) : 10000원");
+//             System.out.println("=====================");
+
+//             System.out.println("원하시는 번호를 선택하세요 : ");
+//             System.out.println("1 장바구니 담기  2 해당 서적 바로 구매  0 홈페이지  99 종료");
+            
+//             System.out.print("선택: ");
+//             int num = scanner.nextInt();
+//             scanner.nextLine(); // 버퍼 비우기
+
+//             switch (num) {
+//                 case 0:
+//                     home(scanner);
+//                     return; // 홈페이지로 복귀
+//                 case 1:
+//                     System.out.println("장바구니에 담기");
+//                     System.out.print("서적 상태 선택(1:최상 2:상 3:중 4.하): ");
+//                     int state = scanner.nextInt();
+//                     scanner.nextLine(); // 버퍼 비우기
+                    
+//                     System.out.print("수량 입력: ");
+//                     int amounts = scanner.nextInt();
+//                     scanner.nextLine(); // 버퍼 비우기
+                    
+//                     System.out.println(amounts + "권이 장바구니에 담겼습니다.");
+//                     cart(scanner);
+//                     break;
+//                 case 2:
+//                     System.out.print("서적 상태 선택(1:최상 2:상 3:중 4.하): ");
+//                     int state1 = scanner.nextInt();
+//                     scanner.nextLine(); // 버퍼 비우기
+                    
+//                     System.out.print("수량 입력: ");
+//                     int amounts1 = scanner.nextInt();
+//                     scanner.nextLine(); // 버퍼 비우기
+                    
+//                     System.out.println(amounts1 + "권을 바로 구매합니다.");
+//                     order(scanner);
+//                     break;
+//                 case 8:
+//                     cart(scanner);
+//                     return;
+//                 case 99:
+//                     exit(scanner);
+//                     break;
+//                 default:
+//                     System.out.println("잘못된 입력입니다.");
+//                     break;
+//             }
+//         } catch (Exception e) {
+//             System.out.println("오류가 발생했습니다: " + e.getMessage());
+//             scanner.nextLine(); // 버퍼 비우기
+//         }
+//     }
+
+//     private static void order(Scanner scanner) {
+//         try {
+//             System.out.println("> 주문 페이지");
+//             System.out.println("=====================");
+//             System.out.println("- 주문 상품: 자바 프로그래밍");
+//             System.out.println("- 상태: 최상");
+//             System.out.println("- 수량: 1");
+//             System.out.println("- 가격: 25000원");
+//             System.out.println("- 배송비: 3000원");
+//             System.out.println("- 총액: 28000원");
+//             System.out.println("=====================");
+//             System.out.println("1 주문 확정 0 홈페이지 이동 99 종료");
+            
+//             System.out.print("선택: ");
+//             int num = scanner.nextInt();
+//             scanner.nextLine(); // 버퍼 비우기
+
+//             switch (num) {
+//                 case 0:
+//                     home(scanner);
+//                     return; // 홈페이지로 복귀
+//                 case 1:
+//                     System.out.println("주문을 진행합니다...");
+//                     System.out.println("주문이 완료되었습니다!");
+//                     return; // 주문 완료 후 홈페이지로 복귀
+//                 case 8:
+//                     cart(scanner);
+//                     return;
+//                 case 99:
+//                     exit(scanner);
+//                     break;
+//                 default:
+//                     System.out.println("잘못된 입력입니다.");
+//                     break;
+//             }
+//         } catch (Exception e) {
+//             System.out.println("오류가 발생했습니다: " + e.getMessage());
+//             scanner.nextLine(); // 버퍼 비우기
+//         }
+//     }
+
+//     private static void sort(Scanner scanner) {
+//         System.out.println("정렬을 선택해주세요 : ");
+//         System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 가격순 0 홈페이지 99 종료"); // 구매 순위 4 
+        
+//         System.out.print("선택: ");
+//         int num = scanner.nextInt();
+//         scanner.nextLine(); // 버퍼 비우기
+        
+//         switch (num) {
+//             case 0:
+//                 home(scanner);
+//                 return; // 홈으로 돌아가기
+//             case 1:
+//                 System.out.println("베스트셀러 순위로 정렬합니다.");
+//                 break;
+//             case 2:
+//                 System.out.println("리뷰 순위로 정렬합니다.");
+//                 break;
+//             case 3:
+//                 System.out.println("가격순으로 정렬합니다.");
+//                 break;
+//             case 8:
+//                 cart(scanner);
+//                 break;
+//             case 99:
+//                 exit(scanner);
+//                 break;
+//             default:
+//                 System.out.println("잘못된 입력입니다.");
+//                 break;
+//         }
+//     }
+
+//     private static void cart(Scanner scanner) {
+//         System.out.println("> 장바구니 페이지");
+//         System.out.println("=====================");
+//         System.out.println("1. 자바 프로그래밍 (최상) - 1권 - 25000원"); // 해당 부분 수정이 필요! -> 업데이트된 책이름과 권수 및 가격이 나와야한다.(db 연동후)
+//         System.out.println("2. 스프링 부트 가이드 (상) - 2권 - 40000원"); // 해당 부분 수정이 필요! -> (이하 동일)
+//         System.out.println("=====================");
+//         System.out.println("총액: 65000원");
+//         System.out.println("1. 전체 구매 2. 선택 구매 3. 장바구니 비우기 0.홈페이지 99.종료");
+
+//         System.out.print("선택: ");
+//         int num = scanner.nextInt();
+//         scanner.nextLine(); // 버퍼 비우기
+        
+//         switch (num) {
+//             case 0:
+//                 home(scanner);
+//                 return; // 홈페이지로 복귀
+//             case 1:
+//                 System.out.println("전체 상품을 구매합니다.");
+//                 order(scanner);
+//                 break;
+//             case 2:
+//                 System.out.println("구매할 상품 번호를 입력하세요.");
+//                 System.out.print("상품 번호: ");
+//                 int itemNum = scanner.nextInt();
+//                 scanner.nextLine(); // 버퍼 비우기
+//                 System.out.println(itemNum + "번 상품을 구매합니다.");
+//                 order(scanner);
+//                 break;
+//             case 3:
+//                 System.out.println("장바구니를 비웠습니다.");
+//                 return;
+//             case 99:
+//                 exit(scanner);
+//                 break;
+//             default:
+//                 System.out.println("잘못된 입력입니다.");
+//                 break;
+//         }
+//     }
+// }
 import java.util.Scanner;
+import java.util.Random;
 
 public class ViewMain {
+    private static final Random random = new Random();
+
+    // 책 구매 및 장바구니 담기 시 출력할 메시지 배열
+    private static final String[] PURCHASE_MESSAGES = {
+        "지금까지 읽으신 책의 총 페이지를 쌓으면 에베레스트 높이의 3배에 달합니다.",
+        "당신이 읽은 책들을 쌓으면 남산타워 15개를 세운 높이입니다.",
+        "올해 독서에 투자한 시간은 서울에서 부산까지 KTX로 20번 왕복할 수 있는 시간입니다.",
+        "당신의 독서 시간은 넷플릭스 드라마 '오징어 게임' 시리즈를 35번 볼 수 있는 시간입니다.",
+        "각 페이지가 한 걸음이라면, 당신은 서울에서 부산까지 두 번 왕복한 거리를 걸었습니다!",
+        "당신이 읽은 책의 페이지를 일렬로 늘어놓으면 한강 길이의 5배에 해당합니다.",
+        "당신의 전자책 독서 습관은 소나무 15그루를 살렸습니다—여의도 공원의 1/10에 해당하는 면적입니다.",
+        "당신이 읽은 책들의 무게는 중형 승용차 한 대와 같습니다.",
+        "올해 읽은 책의 두께를 모두 합치면 냉장고 높이의 2배입니다."
+    };
+
+    // 장바구니 페이지에서 출력할 출판 트렌드 메시지 배열
+    private static final String[] TREND_MESSAGES = {
+        "당신이 선호하는 장르의 평균 가격은 2020년 이후 15% 하락했습니다.",
+        "A출판사는 시장 점유율 30%로 선두를 달리고, B출판사가 20%로 뒤를 잇고 있습니다.",
+        "높은 평점을 받은 책들은 대체로 가격이 낮고 2020년 이후 출간된 경향이 있습니다.",
+        "미스터리 장르는 다른 장르에 비해 일관되게 높은 평점을 받고 있습니다."
+    };
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         System.out.println("===================온라인 서점 시스템============");
         System.out.println(">> 로그인 >>");
         System.out.print("성명: ");
-        String name = scanner.nextLine();
+        scanner.nextLine();
         System.out.println();
 
         System.out.print("비밀번호: ");
-        String password = scanner.nextLine();
+        scanner.nextLine();
         System.out.println();
 
         home(scanner);
@@ -458,94 +918,29 @@ public class ViewMain {
                 System.out.println("= 4. 장바구니 보기  ");
                 System.out.println("= 99. 종료     ");
                 System.out.println("====================");
-                System.out.println();
-
                 System.out.print("메뉴 선택: ");
-                System.out.println();
-                
+
                 int num = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
 
                 switch (num) {
                     case 1:
-                        search(scanner); 
+                        search(scanner);
                         break;
                     case 2:
-                        user(scanner); 
+                        user(scanner);
                         break;
                     case 3:
-                        System.out.println("주문 리스트");
-                        System.out.println("주문 리스트");
-                        System.out.println("주문 리스트");
-                        System.out.println("주문 리스트");
+                        System.out.println("주문 이력을 확인합니다.");
                         break;
                     case 4:
-                        cart(scanner); 
+                        cart(scanner);
                         break;
                     case 99:
                         exit(scanner);
                         break;
                     default:
                         System.out.println("잘못된 입력입니다. 초기 화면으로 돌아갑니다.");
-                        break;
-                }
-            } catch (Exception e) {
-                System.out.println("오류가 발생했습니다: " + e.getMessage());
-                scanner.nextLine(); // 입력 버퍼 비우기
-            }
-        }
-    }
-
-    private static void exit(Scanner scanner) {
-        System.out.println("시스템 종료? (y/n)");
-        String str = scanner.nextLine();
-
-        if (str.equalsIgnoreCase("y")) {
-            System.out.println("시스템을 종료합니다. 감사합니다.");
-            System.exit(0);
-        } else {
-            System.out.println("\n\n\n");
-            System.out.println("초기 화면으로 돌아갑니다.");
-        }
-    }
-
-    private static void user(Scanner scanner) {
-        while (true) {
-            try {
-                System.out.println("> 유저 정보 조회");
-                System.out.println("> 유저 정보 리스트");
-                System.out.println("> 유저 정보 리스트");
-                System.out.println("> 유저 정보 리스트");
-                System.out.println("> 유저 정보 리스트");
-                System.out.println("원하시는 번호를 선택하세요 : ");
-                
-                System.out.println("\n");
-                System.out.println("1 회원 정보 수정  2 이전으로 바로가기 0 홈페이지 돌아가기 99 종료");
-                System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
-                System.out.println("\n\n\n");
-                
-                System.out.print("선택: ");
-                int num = scanner.nextInt();
-                scanner.nextLine(); // 버퍼 비우기
-
-                switch (num) {
-                    case 0:
-                        home(scanner);
-                        return; // 홈페이지로 복귀
-                    case 1:
-                        System.out.println("회원 정보 수정");
-                        break;
-                    case 2:
-                        return; // 상위 메뉴로 이동
-                    case 8:
-                        cart(scanner);
-                        return;
-                    case 99:
-                        exit(scanner);
-                        break;
-                    default:
-                        System.out.println("잘못된 입력입니다.");
-                        break;
                 }
             } catch (Exception e) {
                 System.out.println("오류가 발생했습니다: " + e.getMessage());
@@ -557,53 +952,34 @@ public class ViewMain {
     private static void search(Scanner scanner) {
         while (true) {
             try {
-                System.out.println("\n\n");
                 System.out.println("====================[도서 검색]====================");
-                System.out.println("[검색 유형[v]]");
-                
                 System.out.println("|-1 베스트셀러 검색");
                 System.out.println("|-2 신간 검색");
                 System.out.println("|-3 전체 검색");
-
-                System.out.println();
                 System.out.println("|-0 홈페이지로 돌아가기");
                 System.out.println("|-99 종료");
-                System.out.println();
-                System.out.println("* 숫자 8을 입력하면 모든 화면에서 장바구니 보기 화면으로 넘어갑니다");
-                System.out.println("====================");
-
-                System.out.println("> 서적 검색 ");
-                System.out.print("검색어를 입력해주세요: ");
-                String searchContents = scanner.nextLine();
-                System.out.println();
-
-                System.out.print("검색유형을 선택해주세요: ");
+                System.out.print("검색 유형 선택: ");
 
                 int num = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
-                
+
                 switch (num) {
+                    case 1:
+                        searchResult(scanner, "베스트셀러");
+                        break;
+                    case 2:
+                        searchResult(scanner, "신간");
+                        break;
+                    case 3:
+                        searchResult(scanner, "전체");
+                        break;
                     case 0:
-                        home(scanner);
                         return; // 홈페이지로 복귀
-                    case 1: // 베스트 셀러
-                        searchResult("bstseller", searchContents, scanner);
-                        break;
-                    case 2: // 신간
-                        searchResult("newseller", searchContents, scanner);
-                        break;
-                    case 3: // 전체
-                        searchResult("all", searchContents, scanner);
-                        break;
-                    case 8:
-                        cart(scanner);
-                        return;
                     case 99:
                         exit(scanner);
                         break;
                     default:
                         System.out.println("잘못된 입력입니다.");
-                        break;
                 }
             } catch (Exception e) {
                 System.out.println("오류가 발생했습니다: " + e.getMessage());
@@ -612,178 +988,39 @@ public class ViewMain {
         }
     }
 
-    private static void searchResult(String searchType, String searchContents, Scanner scanner) {
-        if (searchType.equals("bstseller")) {
-            System.out.println("베스트셀러 검색 결과입니다.");
-        } else if (searchType.equals("newseller")) {
-            System.out.println("신간 검색 결과입니다.");
-        } else if (searchType.equals("all")) {
-            System.out.println("전체 검색 결과입니다.");
-        } else {
-            System.out.println("잘못된 검색어입니다.");
-            return;
-        }
+    private static void searchResult(Scanner scanner, String type) {
+        System.out.printf("[%s 검색 결과]%n", type);
+        System.out.println("- 책 제목: 자바 프로그래밍 예제");
+        System.out.println("- 저자: 홍길동");
+        System.out.println("- 가격: 15,000원");
 
-        // 검색 결과 표시
-        System.out.println("====================[검색결과페이지]====================");
-        System.out.println("= 검색어: " + searchContents);
-        System.out.println("= 검색 유형: " + searchType);
-        System.out.println("= 정렬 유형: 기본(문자 오름차순 정렬)");
-        System.out.println("====================");
-        System.out.println("\n\n");
-
-        // 검색 결과 예시 출력 -> 반복 구문이 있어야겠죠?
-        // 📖📓📚📑🔍🖋✏🖍📆📝🗓📌📌⌛⏰ 💰💵💶💸 💨💫💬 🗝📟📞🖥💻🛒
-        System.out.println("📗 [서적 리스트1] ");
-        System.out.println("📓 {1번째 책 제목} ");
-        System.out.println("📝 {1번째 책 저자}");
-        System.out.println("📌 {북타입: Ebook}");
-        System.out.println("💸 {판매가: 18000원} ");
-        System.out.println("====================");
-
-        System.out.println("[액션을 선택해주세요[v]]");
-        System.out.println("|-1 📚원하는 도서 선택 ");
-        System.out.println("|-2 🔍도서 재검색");
-        System.out.println("|-3 재정렬💨");
-        System.out.println("|-0 🏠 홈페이지로 돌아가기");
-        System.out.println("|-8 🛒 장바구니");
-        System.out.println("|-99 ⏹ 종료");
-        System.out.println("====================");
-
-        System.out.print("액션 선택: ");
+        System.out.print("1. 상세보기 | 0. 뒤로가기 : ");
         int num = scanner.nextInt();
         scanner.nextLine(); // 버퍼 비우기
-        
-        switch (num) {
-            case 0:
-                home(scanner);
-                return; // 홈페이지로 복귀
-            case 1: // 원하는 도서 선택
-                detail(scanner);
-                break;
-            case 2: // 재검색 - 스택 오버플로우 방지를 위해 return
-                search(scanner);
-                break;
-            case 3: // 재정렬
-                sort(scanner);
-                break;
-            case 8:
-                cart(scanner);
-                break;
-            case 99:
-                exit(scanner);
-                break; 
-            default:
-                System.out.println("잘못된 입력입니다.");
-                break;
-        }
+
+        if (num == 1) detail(scanner);
     }
 
     private static void detail(Scanner scanner) {
         try {
-            System.out.println("> 책 상세 정보");
-            System.out.println("=====================");
-            System.out.println("- 서적명: 자바 프로그래밍");
+            System.out.println("[도서 상세 정보]");
+            System.out.println("- 제목: 자바 프로그래밍 예제");
             System.out.println("- 저자: 홍길동");
-            System.out.println("- 출판사: 코딩출판사");
-            System.out.println("- 출판일: 2023-01-01");
-            System.out.println("=====================");
-            System.out.println();
+            System.out.println("- 가격: 15,000원");
 
-            System.out.println("> 중고 서적 가격표");
-            System.out.println("=====================");
-            System.out.println("- 최상 (5) : 25000원");
-            System.out.println("- 상 (3) : 20000원");
-            System.out.println("- 중 (7) : 15000원");
-            System.out.println("- 하 (2) : 10000원");
-            System.out.println("=====================");
-
-            System.out.println("원하시는 번호를 선택하세요 : ");
-            System.out.println("1 장바구니 담기  2 해당 서적 바로 구매  0 홈페이지  99 종료");
-            
-            System.out.print("선택: ");
+            System.out.print("1. 장바구니 담기 | 2. 바로 구매 | 0. 뒤로가기 : ");
             int num = scanner.nextInt();
             scanner.nextLine(); // 버퍼 비우기
 
             switch (num) {
-                case 0:
-                    home(scanner);
-                    return; // 홈페이지로 복귀
                 case 1:
-                    System.out.println("장바구니에 담기");
-                    System.out.print("서적 상태 선택(1:최상 2:상 3:중 4.하): ");
-                    int state = scanner.nextInt();
-                    scanner.nextLine(); // 버퍼 비우기
-                    
-                    System.out.print("수량 입력: ");
-                    int amounts = scanner.nextInt();
-                    scanner.nextLine(); // 버퍼 비우기
-                    
-                    System.out.println(amounts + "권이 장바구니에 담겼습니다.");
-                    cart(scanner);
+                    addToCart(scanner);
                     break;
                 case 2:
-                    System.out.print("서적 상태 선택(1:최상 2:상 3:중 4.하): ");
-                    int state1 = scanner.nextInt();
-                    scanner.nextLine(); // 버퍼 비우기
-                    
-                    System.out.print("수량 입력: ");
-                    int amounts1 = scanner.nextInt();
-                    scanner.nextLine(); // 버퍼 비우기
-                    
-                    System.out.println(amounts1 + "권을 바로 구매합니다.");
-                    order(scanner);
+                    purchaseBook(scanner);
                     break;
-                case 8:
-                    cart(scanner);
-                    return;
-                case 99:
-                    exit(scanner);
-                    break;
-                default:
-                    System.out.println("잘못된 입력입니다.");
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println("오류가 발생했습니다: " + e.getMessage());
-            scanner.nextLine(); // 버퍼 비우기
-        }
-    }
-
-    private static void order(Scanner scanner) {
-        try {
-            System.out.println("> 주문 페이지");
-            System.out.println("=====================");
-            System.out.println("- 주문 상품: 자바 프로그래밍");
-            System.out.println("- 상태: 최상");
-            System.out.println("- 수량: 1");
-            System.out.println("- 가격: 25000원");
-            System.out.println("- 배송비: 3000원");
-            System.out.println("- 총액: 28000원");
-            System.out.println("=====================");
-            System.out.println("1 주문 확정 0 홈페이지 이동 99 종료");
-            
-            System.out.print("선택: ");
-            int num = scanner.nextInt();
-            scanner.nextLine(); // 버퍼 비우기
-
-            switch (num) {
                 case 0:
-                    home(scanner);
-                    return; // 홈페이지로 복귀
-                case 1:
-                    System.out.println("주문을 진행합니다...");
-                    System.out.println("주문이 완료되었습니다!");
-                    return; // 주문 완료 후 홈페이지로 복귀
-                case 8:
-                    cart(scanner);
-                    return;
-                case 99:
-                    exit(scanner);
-                    break;
-                default:
-                    System.out.println("잘못된 입력입니다.");
-                    break;
+                    return; // 뒤로가기
             }
         } catch (Exception e) {
             System.out.println("오류가 발생했습니다: " + e.getMessage());
@@ -791,78 +1028,69 @@ public class ViewMain {
         }
     }
 
-    private static void sort(Scanner scanner) {
-        System.out.println("정렬을 선택해주세요 : ");
-        System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 가격순 0 홈페이지 99 종료"); // 구매 순위 4 
-        
-        System.out.print("선택: ");
-        int num = scanner.nextInt();
+    private static void addToCart(Scanner scanner) {
+        System.out.print("수량 입력: ");
+        int quantity = scanner.nextInt();
         scanner.nextLine(); // 버퍼 비우기
-        
-        switch (num) {
-            case 0:
-                home(scanner);
-                return; // 홈으로 돌아가기
-            case 1:
-                System.out.println("베스트셀러 순위로 정렬합니다.");
-                break;
-            case 2:
-                System.out.println("리뷰 순위로 정렬합니다.");
-                break;
-            case 3:
-                System.out.println("가격순으로 정렬합니다.");
-                break;
-            case 8:
-                cart(scanner);
-                break;
-            case 99:
-                exit(scanner);
-                break;
-            default:
-                System.out.println("잘못된 입력입니다.");
-                break;
-        }
+
+        // 랜덤 메시지 출력
+        String message = getRandomPurchaseMessage();
+        System.out.printf("%d권이 장바구니에 담겼습니다.%n", quantity);
+        System.out.printf("[독서 통계] %s%n", message);
+    }
+
+    private static void purchaseBook(Scanner scanner) {
+        System.out.print("수량 입력: ");
+        int quantity = scanner.nextInt();
+        scanner.nextLine(); // 버퍼 비우기
+
+        // 랜덤 메시지 출력
+        String message = getRandomPurchaseMessage();
+        System.out.printf("%d권을 구매하셨습니다.%n", quantity);
+        System.out.printf("[독서 통계] %s%n", message);
     }
 
     private static void cart(Scanner scanner) {
-        System.out.println("> 장바구니 페이지");
-        System.out.println("=====================");
-        System.out.println("1. 자바 프로그래밍 (최상) - 1권 - 25000원"); // 해당 부분 수정이 필요! -> 업데이트된 책이름과 권수 및 가격이 나와야한다.(db 연동후)
-        System.out.println("2. 스프링 부트 가이드 (상) - 2권 - 40000원"); // 해당 부분 수정이 필요! -> (이하 동일)
-        System.out.println("=====================");
-        System.out.println("총액: 65000원");
-        System.out.println("1. 전체 구매 2. 선택 구매 3. 장바구니 비우기 0.홈페이지 99.종료");
+        while (true) {
+            try {
+                // 랜덤 출판 트렌드 메시지 출력
+                String trendMessage = getRandomTrendMessage();
+                System.out.printf("[출판 트렌드] %s%n", trendMessage);
 
-        System.out.print("선택: ");
-        int num = scanner.nextInt();
-        scanner.nextLine(); // 버퍼 비우기
-        
-        switch (num) {
-            case 0:
-                home(scanner);
-                return; // 홈페이지로 복귀
-            case 1:
-                System.out.println("전체 상품을 구매합니다.");
-                order(scanner);
-                break;
-            case 2:
-                System.out.println("구매할 상품 번호를 입력하세요.");
-                System.out.print("상품 번호: ");
-                int itemNum = scanner.nextInt();
+                System.out.print("1. 전체 구매 | 0. 뒤로가기 : ");
+                int num = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
-                System.out.println(itemNum + "번 상품을 구매합니다.");
-                order(scanner);
-                break;
-            case 3:
-                System.out.println("장바구니를 비웠습니다.");
-                return;
-            case 99:
-                exit(scanner);
-                break;
-            default:
-                System.out.println("잘못된 입력입니다.");
-                break;
+
+                if (num == 1) purchaseBook(scanner);
+                else if (num == 0) return; // 뒤로가기
+            } catch (Exception e) {
+                System.out.println("오류가 발생했습니다: " + e.getMessage());
+                scanner.nextLine(); // 버퍼 비우기
+            }
         }
     }
-}
 
+    private static void user(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.print("1. 회원 정보 수정 | 0. 뒤로가기 : ");
+                int num = scanner.nextInt();
+                if (num == 0) return; // 뒤로가기
+            } catch (Exception e) {
+                scanner.nextLine(); // 버퍼 비우기
+            }
+        }
+    }
+
+    private static void exit(Scanner scanner) {
+        System.exit(0); // 프로그램 종료
+    }
+
+    private static String getRandomPurchaseMessage() {
+        return PURCHASE_MESSAGES[random.nextInt(PURCHASE_MESSAGES.length)];
+    }
+
+    private static String getRandomTrendMessage() {
+        return TREND_MESSAGES[random.nextInt(TREND_MESSAGES.length)];
+    }
+}
