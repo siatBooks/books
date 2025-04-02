@@ -3,6 +3,7 @@ package service.user;
 import domain.dto.cart.CartInsertRequestDto;
 import domain.dto.cart.CartUpdateRequestDto;
 import domain.dto.order.OrderSheetUpdateDto;
+import domain.dto.user.UserInfoSelectResponseDto;
 import domain.dto.user.UserInfoUpdateRequestDto;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List selectUserInfo(int userId) {
-        return List.of();
+    public UserInfoSelectResponseDto selectUserInfo(int userId) {
+        return null;
     }
 
     @Override

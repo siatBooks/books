@@ -1,9 +1,6 @@
 package service.order;
 
-import domain.dto.cart.CartInsertRequestDto;
-import domain.dto.cart.CartUpdateRequestDto;
 import domain.dto.order.*;
-import domain.dto.user.UserInfoUpdateRequestDto;
 
 import java.util.List;
 
@@ -11,7 +8,7 @@ public interface OrderService {
     // 주문
 
     // 이전 주문 내역 확인
-    List selectOrder(int userId);
+    List<OrderHistoryListItemResponseDto> selectOrderHistory(int userId);
 
     // 바로 구매하기
     OrderDetailByDirectResponseDto selectOrderDetailByDirect(OrderDetailByDirectRequestDto requestDto);

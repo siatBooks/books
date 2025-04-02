@@ -1,16 +1,23 @@
 package service.order;
 
-import domain.dto.cart.CartInsertRequestDto;
-import domain.dto.cart.CartUpdateRequestDto;
-import domain.dto.order.OrderSheetUpdateDto;
-import domain.dto.user.UserInfoUpdateRequestDto;
+import domain.dto.order.*;
 
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
     @Override
-    public List selectOrder(int userId) {
+    public List<OrderHistoryListItemResponseDto> selectOrderHistory(int userId) {
         return List.of();
+    }
+
+    @Override
+    public OrderDetailByDirectResponseDto selectOrderDetailByDirect(OrderDetailByDirectRequestDto requestDto) {
+        return null;
+    }
+
+    @Override
+    public OrderDetailByCartResponseDto selectOrderDetailByCart(OrderDetailByCartRequestDto requestDto) {
+        return null;
     }
 
     @Override

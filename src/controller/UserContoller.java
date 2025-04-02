@@ -1,5 +1,6 @@
 package controller;
 
+import domain.dto.user.UserInfoSelectResponseDto;
 import domain.dto.user.UserInfoUpdateRequestDto;
 import service.book.BookService;
 import service.user.UserService;
@@ -19,7 +20,7 @@ public class UserContoller {
     }
 
     // 유저 정보 조회
-    public List selectUserInfo(int userId) {
+    public UserInfoSelectResponseDto selectUserInfo(int userId) {
         return userService.selectUserInfo(userId);
     }
 
