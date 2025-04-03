@@ -418,7 +418,11 @@ public class ViewMain {
         printHeader("'" + keyword + "' 검색 결과 (" + types + ")");
 
         // 추가 서비스 연결된 리스트
+        System.out.println("베스트");
         frontController.selectBookListInBest("");
+        System.out.println("신간");
+        frontController.selectBookListInNew("");
+        frontController.selectBookList("");
 
         // 검색 리스트 서비스 추가 필요
         if(books.isEmpty()) {
@@ -516,7 +520,12 @@ public class ViewMain {
             System.out.println(SUB_BORDER);
         }
         // 추가 서비스 연결된 리스트
+        // 추가 서비스 연결된 리스트
+        System.out.println("베스트");
         frontController.selectBookListInBest("");
+        System.out.println("신간");
+        frontController.selectBookListInNew("");
+        frontController.selectBookList("");
     }
 
     private static String getConditionText(String condition) {

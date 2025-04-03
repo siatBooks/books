@@ -19,6 +19,20 @@ public class FrontController {
         }
         return bookController.selectBookListInBest(keyword);
     }
+    public List<BookListItemResponseDto> selectBookListInNew(String keyword){
+        BookController bookController = (BookController) factory.getController("book");
+        for (BookListItemResponseDto dto : bookController.selectBookListInBest(keyword)) {
+            System.out.println("dto = " + dto);
+        }
+        return bookController.selectBookListInNew(keyword);
+    }
+    public List<BookListItemResponseDto> selectBookList(String keyword){
+        BookController bookController = (BookController) factory.getController("book");
+        for (BookListItemResponseDto dto : bookController.selectBookListInBest(keyword)) {
+            System.out.println("dto = " + dto);
+        }
+        return bookController.selectBookList(keyword);
+    }
 
 
 
