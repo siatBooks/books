@@ -1,5 +1,7 @@
 import controller.FrontController;
+import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
+import oracle.net.aso.e;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -411,21 +413,28 @@ public class ViewMain {
                     .filter(book -> book.title.contains(keyword) || book.author.contains(keyword))
                     .collect(Collectors.toList());
 
-            handleSearchResults(results, searchType, keyword, scanner);
+            handleSearchResults(searchType, keyword, scanner); // results, 
         }
     }
 
-    private static void handleSearchResults(List<Book> books, String types, String keyword, Scanner scanner) {
+    private static void handleSearchResults(String types, String keyword, Scanner scanner) {
         clearScreen();
         printHeader("'" + keyword + "' 검색 결과 (" + types + ")");
 
-        // 추가 서비스 연결된 리스트
-        System.out.println("베스트");
-        frontController.selectBookListInBest("");
-        System.out.println("신간");
-        frontController.selectBookListInNew("");
-        list = frontController.selectBookList("");
+        
 
+        List<BookListItemDto> books = new ArrayList<>(); // MockDB.getBooks(types).stream()
+        // if 조건문 주기 &&
+        if (types.equals("베스트셀러")) {
+            books = frontController.selectBookListInBest(keyword);
+        } else if (types.equals("신간")) {
+            books = frontController.selectBookListInNew(keyword);
+        } else if (types.equals("전체")) {
+            books = frontController.selectBookList(keyword);
+        } 
+        
+        
+        // 추가 서비스 연결된 리스트
         // 검색 리스트 서비스 추가 필요
         if(books.isEmpty()) {
             System.out.println("\n[알림] 검색 결과가 없습니다");
@@ -484,7 +493,7 @@ public class ViewMain {
         }
     }
 
-    private static void sortBooks(List<Book> books, int sortChoice, String types) {
+    private static void sortBooks(List<BookInfoDetailResponseDto> books, int sortChoice, String types) {
         // 소트 서비스 추가
         System.out.println("수정 후");
         System.out.println("출판일");
@@ -496,37 +505,37 @@ public class ViewMain {
         System.out.println("수정 전");
         switch(sortChoice) {
             case 1:
-                books.sort(Comparator.comparingInt(Book::getPrice));
+                books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getPriceStandard() != null ? b.getPriceStandard() : 0)));
                 break;
             case 2:
-                books.sort((b1, b2) -> b2.getPrice() - b1.getPrice());
+                books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getPriceStandard() != null ? b.getPriceStandard() : 0)).reversed());
                 break;
             case 3:
-                books.sort((b1, b2) -> b2.publicationDate.compareTo(b1.publicationDate));
+                books.sort(Comparator.nullsFirst(Comparator.comparing(b -> b.getPerdate(), Comparator.nullsLast(Comparator.naturalOrder()))).reversed());
                 break;
             case 4:
                 if(types.equals("베스트셀러")) {
-                    books.sort(Comparator.comparingInt(b -> b.reviewRank != null ? b.reviewRank : Integer.MAX_VALUE));
+                    books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getCustomerReviewRank() != null ? b.getCustomerReviewRank() : Integer.MAX_VALUE)));
                 }
                 break;
             default:
-                books.sort(Comparator.comparing(b -> b.title));
+                books.sort(Comparator.nullsFirst(Comparator.comparing(b -> b.getTitle(), Comparator.nullsLast(Comparator.naturalOrder()))));
         }
     }
 
-    private static void displayBooks(List<Book> books) {
+    private static void displayBooks(List<BookListItemDto> books) {
         int index = 1;
         // 기존 뷰 더미데이터
-        for(Book book : books) {
-            System.out.printf("\n%d. %s\n", index++, book.title);
-            System.out.printf("|- ID: %s\n", book.id);
-            System.out.printf("|- 저자: %s\n", book.author);
-            System.out.printf("|- 가격: %,d원\n", book.getPrice());
-            System.out.printf("|- 상태: %s\n", getConditionText(book.condition));
-            System.out.printf("|- 출판일: %s\n", book.publicationDate);
-            System.out.printf("|- 페이지: %d페이지\n", book.pageCount);
-            if(book.reviewRank != null) {
-                System.out.printf("|- 리뷰 순위: %d위\n", book.reviewRank);
+        for(BookListItemDto book : books) {
+            System.out.printf("\n%d. %s\n", index++, book.getTitle());
+            System.out.printf("|- ID: %s\n", book.getBookId());
+            System.out.printf("|- 저자: %s\n", book.getAuthor());
+            System.out.printf("|- 가격: %,d원\n", book.getPriceStandard());
+            System.out.printf("|- 상태: %s\n", getConditionText(book.getDisplayType()));
+            System.out.printf("|- 출판일: %s\n", book.getPerdate());
+            System.out.printf("|- 페이지: %d페이지\n", new Random().nextInt(901)+ 100); // book.pageCount
+            if(book.getCustomerReviewRank() != null) {
+                System.out.printf("|- 리뷰 순위: %d위\n", book.getCustomerReviewRank());
             }
             System.out.println(SUB_BORDER);
         }
