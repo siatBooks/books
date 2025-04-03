@@ -2,7 +2,6 @@ package domain.dao;
 
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
-import domain.dto.book.BookListItemResponseDto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

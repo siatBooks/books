@@ -1,7 +1,6 @@
 package service.book;
 
 import domain.dao.BookDao;
-import domain.dto.book.BookListItemResponseDto;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
 

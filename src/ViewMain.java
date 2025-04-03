@@ -1,6 +1,5 @@
 import controller.FrontController;
 import domain.dto.book.BookListItemDto;
-import domain.dto.book.BookListItemResponseDto;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -478,7 +477,7 @@ public class ViewMain {
             case 1:
                 System.out.print(">> 도서 번호 입력: ");
                 int bookNum = getValidNumber(scanner, 1, books.size());
-                showBookDetail(books.get(bookNum-1), scanner);
+                showBookDetail(bookNum, books.get(bookNum-1), scanner);
                 break;
             case 2: return; // 재검색
             case 99: exit(scanner); break;
@@ -550,9 +549,12 @@ public class ViewMain {
         };
     }
 
-    private static void showBookDetail(Book book, Scanner scanner) {
+    private static void showBookDetail(int bookId, Book book, Scanner scanner) {
         clearScreen();
-        // 북 - 상세보기 서비스 필요
+        // 상세보기 수정 후
+        frontController.selectBookDetail(bookId);
+
+        // 수정 전
         printHeader("[상세 정보] " + book.title);
         System.out.printf("|- ISBN: %s\n", book.id);
         System.out.printf("|- 저자: %s\n", book.author);

@@ -1,6 +1,5 @@
 package controller;
 
-import domain.dto.book.BookListItemResponseDto;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
 import service.book.BookService;

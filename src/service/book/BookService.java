@@ -1,5 +1,4 @@
 package service.book;
-import domain.dto.book.BookListItemResponseDto;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
 

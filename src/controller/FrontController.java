@@ -1,7 +1,6 @@
 package controller;
 
 import domain.dto.book.BookInfoDetailResponseDto;
-import domain.dto.book.BookListItemResponseDto;
 import domain.dto.book.BookListItemDto;
 import factory.BeanFactory;
 
@@ -47,6 +46,8 @@ public class FrontController {
 
     public Optional<BookInfoDetailResponseDto> selectBookDetail(int bookId) {
         BookController bookController = (BookController) factory.getController("book");
+        System.out.println(bookController.selectBookDetail(bookId).get());
+
         return bookController.selectBookDetail(bookId);
     }
 
