@@ -4,12 +4,18 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.stream.Collectors;
 
+import controller.FrontController;
+import factory.BeanFactory;
+
 public class ViewMain {
+    private FrontController front;
     private static final Random random = new Random();
     private static final String BORDER = "==================================================";
     private static final String SUB_BORDER = "---------------------------------------------------";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+    public ViewMain() {
+        front = new FrontController();
+    }
     // 도서 정보 클래스
     static class Book {
         String id;
@@ -388,6 +394,10 @@ public class ViewMain {
 
             if(choice == 0) return;
             if(choice == 99) exit(scanner);
+            
+            System.out.print("\n>> 검색어 입력: ");
+            String keyword = scanner.next();
+            scanner.nextLine(); // 버퍼 비우기
 
             // 북 - 검색 유형 선택 필요
             String searchType = switch(choice) {
@@ -396,11 +406,10 @@ public class ViewMain {
                 case 3 -> "전체";
                 default -> "";
             };
+               
+            BeanFactory.getInstance(); // 스프링 빈 팩토리 초기화 필요
 
-            System.out.print("\n>> 검색어 입력: ");
-            String keyword = scanner.next();
-            scanner.nextLine(); // 버퍼 비우기
-
+            // 여기서 구하면된다.
             List<Book> results = MockDB.getBooks(searchType).stream()
                     .filter(book -> book.title.contains(keyword) || book.author.contains(keyword))
                     .collect(Collectors.toList());
