@@ -793,7 +793,7 @@
 
 //     private static void sort(Scanner scanner) {
 //         System.out.println("정렬을 선택해주세요 : ");
-//         System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 가격순 0 홈페이지 99 종료"); // 구매 순위 4 
+//         System.out.println("1 베스트셀러 순위  2 리뷰 순위 3 판매순 4 최신순 5  0 홈페이지 99 종료"); // 구매 순위 4 
         
 //         System.out.print("선택: ");
 //         int num = scanner.nextInt();
@@ -958,20 +958,28 @@ public class ViewMain {
                 System.out.println("|-3 전체 검색");
                 System.out.println("|-0 홈페이지로 돌아가기");
                 System.out.println("|-99 종료");
-                System.out.print("검색 유형 선택: ");
+                System.out.println("====================");
 
+                
+
+                System.out.print("검색 유형 선택: ");
                 int num = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
 
+                System.out.print("검색어를 입력해주세요: ");
+                String searchContents = scanner.nextLine();
+                System.out.println();
+
+
                 switch (num) {
                     case 1:
-                        searchResult(scanner, "베스트셀러");
+                        searchResult(scanner, "베스트셀러", searchContents);
                         break;
                     case 2:
-                        searchResult(scanner, "신간");
+                        searchResult(scanner, "신간", searchContents);
                         break;
                     case 3:
-                        searchResult(scanner, "전체");
+                        searchResult(scanner, "전체", searchContents);
                         break;
                     case 0:
                         return; // 홈페이지로 복귀
@@ -988,13 +996,82 @@ public class ViewMain {
         }
     }
 
-    private static void searchResult(Scanner scanner, String type) {
+    private static void searchResult(Scanner scanner, String type, String searchContents) {
+        System.out.println("====================[검색결과페이지]====================");
         System.out.printf("[%s 검색 결과]%n", type);
-        System.out.println("- 책 제목: 자바 프로그래밍 예제");
-        System.out.println("- 저자: 홍길동");
-        System.out.println("- 가격: 15,000원");
+        
+        System.out.println("= 검색어: " + searchContents);
+        System.out.println("= 검색 유형: " + type);
+        System.out.println("= 정렬 유형: 기본(문자 오름차순 정렬)");
+        System.out.println("====================");
+        System.out.println("\n\n");
 
-        System.out.print("1. 상세보기 | 0. 뒤로가기 : ");
+        if (type.equals("베스트셀러")) {
+            System.out.println("ㄴ----");
+            System.out.println("- 책 제목: " + searchContents + " 베스트셀러"); ;
+            System.out.println("- 저자: 홍길동");
+            System.out.println("- 가격: 15,000원");  
+            System.out.println("\n");
+
+            System.out.println("ㄴ----");
+            System.out.println("- 책 제목: " + searchContents + " 베스트셀러"); ;
+            System.out.println("- 저자: 홍길동");
+            System.out.println("- 가격: 15,000원");  
+            System.out.println("\n");
+
+            System.out.println("ㄴ----");
+            System.out.println("- 책 제목: " + searchContents + " 베스트셀러"); ;
+            System.out.println("- 저자: 홍길동");
+            System.out.println("- 가격: 15,000원"); 
+
+        } else if (type.equals("신간")) {
+            System.out.println("ㄴ----");
+            System.out.println("- 책 제목: 사랑하는 법" + searchContents + " 신간 ");
+            System.out.println("- 저자: 이순신");
+            System.out.println("- 가격: 20,000원");
+            System.out.println("\n");
+
+            System.out.println("ㄴ----");
+
+            System.out.println("- 책 제목: 사랑하는 법" + searchContents + " 신간 ");
+            System.out.println("- 저자: 이순신");
+            System.out.println("- 가격: 20,000원");
+            System.out.println("\n");
+
+            System.out.println("ㄴ----");
+
+            System.out.println("- 책 제목: 사랑하는 법" + searchContents + " 신간 ");
+            System.out.println("- 저자: 이순신");
+            System.out.println("- 가격: 20,000원");            
+
+        } else if (type.equals("전체")) {
+            System.out.println("ㄴ----");
+            System.out.println("- 책 제목: 2030년 우리의 미래" + searchContents + " 전체 ");
+            System.out.println("- 저자: 김유신");
+            System.out.println("- 가격: 25,000원");
+            System.out.println("\n");
+
+            System.out.println("ㄴ----");
+
+            System.out.println("- 책 제목: 2030년 우리의 미래" + searchContents + " 전체 ");
+            System.out.println("- 저자: 김유신");
+            System.out.println("- 가격: 25,000원");
+
+            System.out.println("\n");
+
+            System.out.println("ㄴ----");
+            System.out.println("- 책 제목: 2030년 우리의 미래" + searchContents + " 전체 ");
+            System.out.println("- 저자: 김유신");
+            System.out.println("- 가격: 25,000원");
+
+            
+        } else {
+            System.out.println("잘못된 검색어입니다.");
+            return;
+        }
+        
+
+        System.out.print("1. 상세보기 | 0. 재검색 : ===>>  "); // 이 부분은 수정 필요: 검색어를 입력받아야 함 그리고 정렬하기도 없고! 0, 99가 없다 
         int num = scanner.nextInt();
         scanner.nextLine(); // 버퍼 비우기
 
@@ -1003,7 +1080,7 @@ public class ViewMain {
 
     private static void detail(Scanner scanner) {
         try {
-            System.out.println("[도서 상세 정보]");
+            System.out.println("================[도서 상세 정보]================");
             System.out.println("- 제목: 자바 프로그래밍 예제");
             System.out.println("- 저자: 홍길동");
             System.out.println("- 가격: 15,000원");
