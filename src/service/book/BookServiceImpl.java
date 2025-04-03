@@ -17,26 +17,36 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookListItemResponseDto> selectBookList(String keyword) {
-        return List.of();
+        return bookDao.selectBookList(keyword);
     }
 
     @Override
     public List<BookListItemResponseDto> selectBookListInBest(String keyword) {
-        return List.of();
+        return bookDao.selectBookListInBest(keyword);
     }
 
     @Override
     public List<BookListItemResponseDto> selectBookListInNew(String keyword) {
-        return List.of();
+        return bookDao.selectBookListInNew(keyword);
     }
 
     @Override
     public BookInfoDetailResponseDto selectBookDetail(int bookId) {
-        return BookInfoDetailResponseDto.builder().build();
+        return null;
     }
 
     @Override
     public List<BookSortListItemResponseDto> sortList(List<BookSortListItemRequestDto> requestDtos) {
         return List.of();
     }
+
+//    @Override
+//    public BookInfoDetailResponseDto selectBookDetail(int bookId) {
+//        return bookDao.selectBookDetail(bookId);
+//    }
+//
+//    @Override
+//    public List<BookSortListItemResponseDto> sortList(List<BookSortListItemRequestDto> requestDtos) {
+//        return bookDao.sortList(requestDtos);
+//    }
 }

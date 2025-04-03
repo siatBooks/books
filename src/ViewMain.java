@@ -1,3 +1,5 @@
+import controller.FrontController;
+
 import java.util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -5,6 +7,8 @@ import java.time.format.DateTimeParseException;
 import java.util.stream.Collectors;
 
 public class ViewMain {
+    private static FrontController frontController = new FrontController();
+
     private static final Random random = new Random();
     private static final String BORDER = "==================================================";
     private static final String SUB_BORDER = "---------------------------------------------------";
@@ -413,6 +417,9 @@ public class ViewMain {
         clearScreen();
         printHeader("'" + keyword + "' 검색 결과 (" + types + ")");
 
+        // 추가 서비스 연결된 리스트
+        frontController.selectBookListInBest("");
+
         // 검색 리스트 서비스 추가 필요
         if(books.isEmpty()) {
             System.out.println("\n[알림] 검색 결과가 없습니다");
@@ -494,6 +501,7 @@ public class ViewMain {
 
     private static void displayBooks(List<Book> books) {
         int index = 1;
+        // 기존 뷰 더미데이터
         for(Book book : books) {
             System.out.printf("\n%d. %s\n", index++, book.title);
             System.out.printf("|- ID: %s\n", book.id);
@@ -507,6 +515,8 @@ public class ViewMain {
             }
             System.out.println(SUB_BORDER);
         }
+        // 추가 서비스 연결된 리스트
+        frontController.selectBookListInBest("");
     }
 
     private static String getConditionText(String condition) {
