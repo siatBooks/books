@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/domain/dto/book/BookListItemResponseDto.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1743683761948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743684856831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \r\n import java.util.Date;\r\n \r\n @ToString\r\n-@Builder\r\n+@BuilderD\r\n public class BookListItemResponseDto {\r\n     private Long bookId;\r\n     private String title;\r\n     private String author;\r\n"
+                },
+                {
+                    "date": 1743684862308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \r\n import java.util.Date;\r\n \r\n @ToString\r\n-@BuilderD\r\n+@Builder\r\n public class BookListItemResponseDto {\r\n     private Long bookId;\r\n     private String title;\r\n     private String author;\r\n"
+                },
+                {
+                    "date": 1743684976865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,15 @@\n package domain.dto.book;\r\n \r\n import lombok.Builder;\r\n+import lombok.Getter;\r\n import lombok.ToString;\r\n \r\n import java.util.Date;\r\n \r\n @ToString\r\n @Builder\r\n+@Getter\r\n public class BookListItemResponseDto {\r\n     private Long bookId;\r\n     private String title;\r\n     private String author;\r\n"
+                },
+                {
+                    "date": 1743685479060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n package domain.dto.book;\r\n \r\n import lombok.Builder;\r\n+import lombok.Data;\r\n import lombok.Getter;\r\n import lombok.ToString;\r\n \r\n import java.util.Date;\r\n"
+                }
+            ],
+            "date": 1743683761948,
+            "name": "Commit-0",
+            "content": "package domain.dto.book;\r\n\r\nimport lombok.Builder;\r\nimport lombok.ToString;\r\n\r\nimport java.util.Date;\r\n\r\n@ToString\r\n@Builder\r\npublic class BookListItemResponseDto {\r\n    private Long bookId;\r\n    private String title;\r\n    private String author;\r\n    private Date perdate;\r\n    private Integer priceStandard;\r\n    private Integer priceSales;\r\n    private String isbn;\r\n    private Integer customerReviewRank;\r\n    private String description;\r\n    private String link;\r\n    private String bookType;\r\n    private String displayType;\r\n    private String coverImg;\r\n    private Integer salesPoint;\r\n    private Long categoryId;\r\n}\r\n"
+        }
+    ]
+}

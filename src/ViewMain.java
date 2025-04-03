@@ -1,4 +1,5 @@
 import controller.FrontController;
+import domain.dto.book.BookListItemResponseDto;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -134,6 +135,9 @@ public class ViewMain {
         );
 
         private static List<Book> availableBooks = new ArrayList<>(masterBooks);
+        // 초기화하는 장면인데, 실제 DB에서 가져오는 것처럼 보이게 하기 위해서 작성한것이다. 이는 전체 출력
+        
+        
 
         static List<Book> getBooks(String searchType) {
             return availableBooks.stream()
@@ -392,6 +396,13 @@ public class ViewMain {
 
             if(choice == 0) return;
             if(choice == 99) exit(scanner);
+            
+
+            System.out.print("\n>> 검색어 입력: ");
+            String keyword = scanner.next();
+            scanner.nextLine(); // 버퍼 비우기
+
+            
 
             // 북 - 검색 유형 선택 필요
             String searchType = switch(choice) {
@@ -400,29 +411,28 @@ public class ViewMain {
                 case 3 -> "전체";
                 default -> "";
             };
-
-            System.out.print("\n>> 검색어 입력: ");
-            String keyword = scanner.next();
-            scanner.nextLine(); // 버퍼 비우기
+            
+                        
 
             List<Book> results = MockDB.getBooks(searchType).stream()
                     .filter(book -> book.title.contains(keyword) || book.author.contains(keyword))
                     .collect(Collectors.toList());
 
-            handleSearchResults(results, searchType, keyword, scanner);
+            handleSearchResults(searchType, keyword, scanner); // 
         }
     }
 
-    private static void handleSearchResults(List<Book> books, String types, String keyword, Scanner scanner) {
+    private static void handleSearchResults(String types, String keyword, Scanner scanner) { // 
         clearScreen();
         printHeader("'" + keyword + "' 검색 결과 (" + types + ")");
 
         // 추가 서비스 연결된 리스트
         System.out.println("베스트");
-        frontController.selectBookListInBest("");
+        List<BookListItemResponseDto> books = frontController.selectBookListInBest(keyword);
         System.out.println("신간");
-        frontController.selectBookListInNew("");
-        frontController.selectBookList("");
+        books = frontController.selectBookListInNew(keyword);
+        System.out.println("전체");
+        books = frontController.selectBookList(keyword);
 
         // 검색 리스트 서비스 추가 필요
         if(books.isEmpty()) {
@@ -431,7 +441,7 @@ public class ViewMain {
             return;
         }
 
-        displayBooks(books);
+        displayBooks(books); // 해당 부분 수정
 
         System.out.println("\n[정렬 옵션]");
         System.out.println();
@@ -503,17 +513,17 @@ public class ViewMain {
         }
     }
 
-    private static void displayBooks(List<Book> books) {
+    private static void displayBooks(List<BookListItemResponseDto> books) {
         int index = 1;
         // 기존 뷰 더미데이터
-        for(Book book : books) {
-            System.out.printf("\n%d. %s\n", index++, book.title);
-            System.out.printf("|- ID: %s\n", book.id);
-            System.out.printf("|- 저자: %s\n", book.author);
-            System.out.printf("|- 가격: %,d원\n", book.getPrice());
-            System.out.printf("|- 상태: %s\n", getConditionText(book.condition));
-            System.out.printf("|- 출판일: %s\n", book.publicationDate);
-            System.out.printf("|- 페이지: %d페이지\n", book.pageCount);
+        for(BookListItemResponseDto book : books) {
+            System.out.printf("\n%d. %s\n", index++, book.getTitle());
+            System.out.printf("|- ID: %s\n", book.getBookId());
+            System.out.printf("|- 저자: %s\n", book.getAuthor());
+            System.out.printf("|- 가격: %,d원\n", book.getPriceStandard());
+            System.out.printf("|- 상태: %s\n", getConditionText(book.getDisplayType()));
+            System.out.printf("|- 출판일: %s\n", book.getPerdate()); // 
+            System.out.printf("|- 페이지: %d페이지\n", );
             if(book.reviewRank != null) {
                 System.out.printf("|- 리뷰 순위: %d위\n", book.reviewRank);
             }

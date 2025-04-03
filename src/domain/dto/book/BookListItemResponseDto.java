@@ -1,12 +1,15 @@
 package domain.dto.book;
 
 import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Date;
 
 @ToString
 @Builder
+@Data
 public class BookListItemResponseDto {
     private Long bookId;
     private String title;
