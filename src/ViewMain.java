@@ -1,4 +1,6 @@
 import controller.FrontController;
+import domain.dto.book.BookListItemDto;
+import domain.dto.book.BookListItemResponseDto;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class ViewMain {
     private static FrontController frontController = new FrontController();
+    private static List<BookListItemDto> list = new ArrayList<>();
 
     private static final Random random = new Random();
     private static final String BORDER = "==================================================";
@@ -422,7 +425,7 @@ public class ViewMain {
         frontController.selectBookListInBest("");
         System.out.println("신간");
         frontController.selectBookListInNew("");
-        frontController.selectBookList("");
+        list = frontController.selectBookList("");
 
         // 검색 리스트 서비스 추가 필요
         if(books.isEmpty()) {
@@ -483,6 +486,15 @@ public class ViewMain {
     }
 
     private static void sortBooks(List<Book> books, int sortChoice, String types) {
+        // 소트 서비스 추가
+        System.out.println("수정 후");
+        System.out.println("출판일");
+        frontController.sortList("perdateAsc", list);
+        System.out.println("가격순");
+        frontController.sortList("priceStandardAsc", list);
+
+        // 기존 소트 뷰
+        System.out.println("수정 전");
         switch(sortChoice) {
             case 1:
                 books.sort(Comparator.comparingInt(Book::getPrice));
