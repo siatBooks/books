@@ -3,6 +3,7 @@ package service.cart;
 import domain.dao.BookDao;
 import domain.dao.CartDao;
 import domain.dto.cart.CartInsertRequestDto;
+import domain.dto.cart.CartSelectResponseDto;
 import domain.dto.cart.CartUpdateRequestDto;
 import domain.dto.order.OrderSheetUpdateDto;
 import domain.dto.user.UserInfoUpdateRequestDto;
@@ -17,13 +18,18 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List selectCart(int userId) {
-        return List.of();
+    public CartSelectResponseDto selectCart(int userId) {
+        return cartDao.selectCart(userId);
     }
 
     @Override
-    public int insertCart(CartInsertRequestDto dto) {
-        return 0;
+    public int insertItemInCart(int bookId, int qty) {
+        return cartDao.insertItemInCart(bookId, qty);
+    }
+
+    @Override
+    public int insertCart(int userId) {
+        return cartDao.insertCart(userId);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.dto.cart.CartInsertRequestDto;
+import domain.dto.cart.CartSelectResponseDto;
 import domain.dto.cart.CartUpdateRequestDto;
 import service.cart.CartService;
 
@@ -13,14 +14,20 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    // 장바구니 생성
+    public int insertCart(int userId){
+        return cartService.insertCart(userId);
+    };
+
     // 장바구니 보기
-    public List selectCart(int userId){
+    public CartSelectResponseDto selectCart(int userId){
+        System.out.println(cartService.selectCart(userId));
         return cartService.selectCart(userId);
     };
 
     // 장바구니에 담기
-    public int insertCart(CartInsertRequestDto dto){
-        return cartService.insertCart(dto);
+    public int insertItemInCart(int bookId, int qty){
+        return cartService.insertItemInCart(bookId, qty);
     };
 
     // 장바구니 수정

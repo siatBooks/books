@@ -580,15 +580,18 @@ public class ViewMain {
 
         switch(choice) {
             case 0: return;
-            case 1: handleAddToCart(book, scanner); break;
+            case 1: handleAddToCart(bookId ,book, scanner); break;
             case 2: processPurchase(book, scanner); break;
             case 99: exit(scanner); break;
         }
     }
 
-    private static void handleAddToCart(Book book, Scanner scanner) {
+    private static void handleAddToCart(int bookId, Book book, Scanner scanner) {
         System.out.print("\n>> 수량 입력: ");
         int quantity = getValidNumber(scanner, 1, 10);
+        // 장바구니 추가 서비스 코드
+        frontController.insertItemInCart(bookId, quantity);
+
         MockCartDB.addItem(book, quantity);
         System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.title, quantity);
         System.out.println("[독서 통계] " + getRandomStatistic(quantity));
@@ -644,6 +647,8 @@ public class ViewMain {
             clearScreen();
             printHeader("장바구니 관리");
             List<CartItem> cart = MockCartDB.getCart();
+
+            frontController.selectCart(101);
 
             if(cart.isEmpty()) {
                 System.out.println("\n[알림] 장바구니가 비어 있습니다");

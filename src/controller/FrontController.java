@@ -2,6 +2,7 @@ package controller;
 
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
+import domain.dto.cart.CartSelectResponseDto;
 import factory.BeanFactory;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public class FrontController {
     public FrontController() {
         factory = BeanFactory.getInstance();
     }
+
+    // book
 
     public List<BookListItemDto> selectBookListInBest(String keyword){
         BookController bookController = (BookController) factory.getController("book");
@@ -49,6 +52,20 @@ public class FrontController {
         System.out.println(bookController.selectBookDetail(bookId).get());
 
         return bookController.selectBookDetail(bookId);
+    }
+
+    // cart
+
+    public CartSelectResponseDto selectCart(int userId) {
+        CartController cartController = (CartController) factory.getController("cart");
+
+        return cartController.selectCart(userId);
+    }
+
+    public int insertItemInCart(int bookId, int qty){
+        CartController cartController = (CartController) factory.getController("cart");
+
+        return cartController.insertItemInCart(bookId, qty);
     }
 
 
