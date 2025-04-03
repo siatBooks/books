@@ -508,10 +508,10 @@ public class ViewMain {
                 books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getPriceStandard() != null ? b.getPriceStandard() : 0)));
                 break;
             case 2:
-                books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getPriceStandard() != null ? b.getPriceStandard() : 0)).reversed());
+                books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> ((BookInfoDetailResponseDto) b).getPriceStandard() != null ? ((BookInfoDetailResponseDto) b).getPriceStandard() : 0)).reversed());
                 break;
             case 3:
-                books.sort(Comparator.nullsFirst(Comparator.comparing(b -> b.getPerdate(), Comparator.nullsLast(Comparator.naturalOrder()))).reversed());
+                books.sort(Comparator.nullsFirst(Comparator.comparing(b -> ((BookInfoDetailResponseDto) b).getPerdate(), Comparator.nullsLast(Comparator.naturalOrder()))).reversed());
                 break;
             case 4:
                 if(types.equals("베스트셀러")) {
@@ -558,24 +558,23 @@ public class ViewMain {
         };
     }
 
-    private static void showBookDetail(int bookId, Book book, Scanner scanner) {
+    private static void showBookDetail(int bookId, BookListItemDto book, Scanner scanner) {
         clearScreen();
         // 상세보기 수정 후
         frontController.selectBookDetail(bookId);
 
         // 수정 전
-        printHeader("[상세 정보] " + book.title);
-        System.out.printf("|- ISBN: %s\n", book.id);
-        System.out.printf("|- 저자: %s\n", book.author);
-        System.out.printf("|- 정가: %,d원\n", book.basePrice);
-        System.out.printf("|- 판매가: %,d원\n", book.getPrice());
-        System.out.printf("|- 상태: %s\n", getConditionText(book.condition));
-        System.out.printf("|- 출판일: %s\n", book.publicationDate);
-        System.out.printf("|- 페이지: %d페이지\n", book.pageCount);
-        if(book.reviewRank != null) {
-            System.out.printf("|- 리뷰 순위: %d위\n", book.reviewRank);
+        printHeader("[상세 정보] " + book.getTitle());
+        System.out.printf("\n%d. %s\n", book.getTitle());
+        System.out.printf("|- ID: %s\n", book.getBookId());
+        System.out.printf("|- 저자: %s\n", book.getAuthor());
+        System.out.printf("|- 가격: %,d원\n", book.getPriceStandard());
+        System.out.printf("|- 상태: %s\n", getConditionText(book.getDisplayType()));
+        System.out.printf("|- 출판일: %s\n", book.getPerdate());
+        System.out.printf("|- 페이지: %d페이지\n", new Random().nextInt(901)+ 100); // book.pageCount
+        if(book.getCustomerReviewRank() != null) {
+            System.out.printf("|- 리뷰 순위: %d위\n", book.getCustomerReviewRank());
         }
-        System.out.println(SUB_BORDER);
 
         printMenu(new String[]{
                 "1. 장바구니 추가",
