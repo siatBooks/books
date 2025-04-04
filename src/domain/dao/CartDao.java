@@ -99,31 +99,5 @@ public class CartDao extends ParentDao {
         return cartSelectResponseDto;
     }
 
-    public int sumBookPrice(int bookId, String status, int qty) {
 
-
-        int flag = 0;
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        String updateSQL = "UPDATE Cart SET CART_TOTAL_PRICE = ? WHERE CART_ID = ?";
-
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            preparedStatement = connection.prepareStatement(updateSQL);
-            preparedStatement.setString(1, (String) map.get("content"));
-            preparedStatement.setString(2, (String) map.get("status"));
-            preparedStatement.setInt(3, (Integer) map.get("seq"));
-            flag = preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return flag;
-
-    }
 }

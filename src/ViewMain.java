@@ -1,8 +1,11 @@
 import controller.FrontController;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
+import oracle.net.aso.e;
 
 import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,10 +14,6 @@ import java.util.stream.Collectors;
 public class ViewMain {
     private static FrontController frontController = new FrontController();
     private static List<BookListItemDto> list = new ArrayList<>();
-
-    private static int userId = 1;
-
-
 
     private static final Random random = new Random();
     private static final String BORDER = "==================================================";
@@ -82,14 +81,14 @@ public class ViewMain {
 
     // 주문 상품 클래스 추가
     static class OrderItem {
-        Book book;
+        BookListItemDto book;
         int quantity;
         int priceAtPurchase;
 
-        public OrderItem(Book book, int quantity) {
-            this.book = book;
+        public OrderItem(BookListItemDto book2, int quantity) {
+            this.book = book2;
             this.quantity = quantity;
-            this.priceAtPurchase = book.getPrice();
+            this.priceAtPurchase = book2.getPriceStandard();
         }
 
         public int getTotalPrice() {
@@ -99,79 +98,215 @@ public class ViewMain {
 
     // Mock 데이터베이스
     static class MockDB {
-        private static final List<Book> masterBooks = Arrays.asList(
+
+        private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        private static Date parseDate(String date) {
+            try {
+                return dateFormat.parse(date);
+            } catch (ParseException e) {
+                throw new RuntimeException("Invalid date format: " + date);
+            }
+        }
+
+        // private static final List<BookListItemDto> masterBooks1 = Arrays.asList(
+        //         // 베스트셀러
+        //         BookListItemDto.builder()
+        //                 .bookId(1L)
+        //                 .title("Java Master")
+        //                 .author("홍길동")
+        //                 .perdate(parseDate("2025-01-15"))
+        //                 .priceStandard(35000)
+        //                 .priceSales((int) (35000 * 0.7)) // condition "상" 기준
+        //                 .isbn("B001")
+        //                 .customerReviewRank(1)
+        //                 .description("Java Master 소개")
+        //                 .link("http://example.com/java-master")
+        //                 .bookType("베스트셀러")
+        //                 .displayType("new")
+        //                 .coverImg("http://example.com/images/java-master.jpg")
+        //                 .salesPoint(1000)
+        //                 .categoryId(101L)
+        //                 .build(),
+
+        //         BookListItemDto.builder()
+        //                 .bookId(2L)
+        //                 .title("Effective Java")
+        //                 .author("Joshua Bloch")
+        //                 .perdate(parseDate("2024-12-01"))
+        //                 .priceStandard(45000)
+        //                 .priceSales((int) (45000 * 0.7)) // condition "상" 기준
+        //                 .isbn("B002")
+        //                 .customerReviewRank(2)
+        //                 .description("Effective Java 소개")
+        //                 .link("http://example.com/effective-java")
+        //                 .bookType("베스트셀러")
+        //                 .displayType("상")
+        //                 .coverImg("http://example.com/images/effective-java.jpg")
+        //                 .salesPoint(2000)
+        //                 .categoryId(102L)
+        //                 .build(),
+
+        //         BookListItemDto.builder()
+        //                 .bookId(3L)
+        //                 .title("Clean Code")
+        //                 .author("Robert C. Martin")
+        //                 .perdate(parseDate("2023-10-05"))
+        //                 .priceStandard(40000)
+        //                 .priceSales((int) (40000 * 0.5)) // condition "중" 기준
+        //                 .isbn("B003")
+        //                 .customerReviewRank(3)
+        //                 .description("Clean Code 소개")
+        //                 .link("http://example.com/clean-code")
+        //                 .bookType("베스트셀러")
+        //                 .displayType("중")
+        //                 .coverImg("http://example.com/images/clean-code.jpg")
+        //                 .salesPoint(1500)
+        //                 .categoryId(103L)
+        //                 .build(),
+
+        //         // 신간
+        //         BookListItemDto.builder()
+        //                 .bookId(101L)
+        //                 .title("Spring Boot Guide")
+        //                 .author("이순신")
+        //                 .perdate(parseDate("2025-03-20"))
+        //                 .priceStandard(30000)
+        //                 .priceSales(30000) // 신간은 할인 없음
+        //                 .isbn("B101")
+        //                 .customerReviewRank(null)
+        //                 .description("Spring Boot Guide 소개")
+        //                 .link("http://example.com/spring-boot-guide")
+        //                 .bookType("신간")
+        //                 .displayType("new")
+        //                 .coverImg("http://example.com/images/spring-boot-guide.jpg")
+        //                 .salesPoint(500)
+        //                 .categoryId(201L)
+        //                 .build()
+        // );
+        private static final List<BookListItemDto> masterBooks = Arrays.asList(
                 // 베스트셀러
-                new Book("B001", "Java Master", "홍길동", 35000, "베스트셀러", "new", "2025-01-15", 1, 450),
-                new Book("B002", "Effective Java", "Joshua Bloch", 45000, "베스트셀러", "상", "2024-12-01", 2, 380),
-                new Book("B003", "Clean Code", "Robert C. Martin", 40000, "베스트셀러", "중", "2023-10-05", 3, 420),
-                new Book("B004", "객체지향의 사실과 오해", "조영호", 22000, "베스트셀러", "하", "2022-08-12", 4, 250),
-                new Book("B005", "모던 자바스크립트 Deep Dive", "이웅모", 38000, "베스트셀러", "new", "2024-11-20", 5, 800),
+                BookListItemDto.builder()
+                        .bookId(1L)
+                        .title("Java Master")
+                        .author("홍길동")
+                        .perdate(parseDate("2025-01-15"))
+                        .priceStandard(35000)
+                        .priceSales((int) (35000 * 0.7)) // condition "상" 기준
+                        .isbn("B001")
+                        .customerReviewRank(1)
+                        .description("Java Master 소개")
+                        .link("http://example.com/java-master")
+                        .bookType("베스트셀러")
+                        .displayType("new")
+                        .coverImg("http://example.com/images/java-master.jpg")
+                        .salesPoint(1000)
+                        .categoryId(101L)
+                        .build(),
 
-                new Book("B006", "Java Master", "홍길동", 35000, "베스트셀러", "상", "2025-01-15", 1, 450),
-                new Book("B007", "Java Master", "홍길동", 35000, "베스트셀러", "중", "2025-01-15", 1, 450),
-                new Book("B008", "Effective Java", "Joshua Bloch", 45000, "베스트셀러", "상", "2024-12-01", 2, 380),
-                new Book("B009", "Effective Java", "Joshua Bloch", 45000, "베스트셀러", "하", "2024-12-01", 2, 380),
-                new Book("B010", "Clean Code", "Robert C. Martin", 40000, "베스트셀러", "중", "2023-10-05", 3, 420),
-                new Book("B011", "Clean Code", "Robert C. Martin", 40000, "베스트셀러", "하", "2023-10-05", 3, 420),
-                new Book("B012", "객체지향의 사실과 오해", "조영호", 22000, "베스트셀러", "하", "2022-08-12", 4, 250),
-                new Book("B013", "객체지향의 사실과 오해", "조영호", 22000, "베스트셀러", "하", "2022-08-12", 4, 250),
-                new Book("B014", "모던 자바스크립트 Deep Dive", "이웅모", 38000, "베스트셀러", "중", "2024-11-20", 5, 800),
-                new Book("B015", "모던 자바스크립트 Deep Dive", "이웅모", 38000, "베스트셀러", "중", "2024-11-20", 5, 800),
+                BookListItemDto.builder()
+                        .bookId(2L)
+                        .title("Effective Java")
+                        .author("Joshua Bloch")
+                        .perdate(parseDate("2024-12-01"))
+                        .priceStandard(45000)
+                        .priceSales((int) (45000 * 0.7)) // condition "상" 기준
+                        .isbn("B002")
+                        .customerReviewRank(2)
+                        .description("Effective Java 소개")
+                        .link("http://example.com/effective-java")
+                        .bookType("베스트셀러")
+                        .displayType("상")
+                        .coverImg("http://example.com/images/effective-java.jpg")
+                        .salesPoint(2000)
+                        .categoryId(102L)
+                        .build(),
 
-
-
-                // 신간
-                new Book("B101", "Spring Boot Guide", "이순신", 30000, "신간", "new", "2025-03-20", null, 320),
-                new Book("B102", "Kotlin Programming", "김민준", 28000, "신간", "new", "2025-03-15", null, 280),
-                new Book("B103", "Cloud Native Architecture", "박지성", 42000, "신간", "new", "2025-03-10", null, 350),
-                new Book("B104", "인공지능과 머신러닝 기초", "최영희", 35000, "신간", "new", "2025-03-05", null, 420),
-                new Book("B105", "블록체인 개발 실전 가이드", "정승호", 37000, "신간", "new", "2025-02-28", null, 380)
-
-                // // 웹개발
-                // new Book("B201", "React for Beginners", "Dan Abramov", 35000, "웹개발", "하", "2023-05-11", null, 300),
-                // new Book("B202", "Vue.js 완벽 가이드", "장영실", 28000, "웹개발", "new", "2025-02-28", null, 280),
-                // new Book("B203", "HTML/CSS 마스터", "구종만", 33000, "웹개발", "상", "2024-07-15", null, 350),
-                // new Book("B204", "Angular 실전 프로젝트", "이동욱", 45000, "웹개발", "new", "2024-09-30", null, 400),
-
-                // // 데이터베이스/백엔드
-                // new Book("B301", "SQL 레벨업", "미즈노 미츠히", 32000, "데이터베이스", "중", "2023-12-05", null, 320),
-                // new Book("B302", "MongoDB 완벽 가이드", "유진우", 37000, "데이터베이스", "new", "2024-01-20", null, 360),
-                // new Book("B303", "스프링 데이터 JPA", "김영한", 35000, "백엔드", "상", "2024-06-10", null, 380),
-                // new Book("B304", "Node.js 백엔드 개발", "이태호", 28000, "백엔드", "하", "2022-05-15", null, 290)
+                BookListItemDto.builder()
+                        .bookId(3L)
+                        .title("Clean Code")
+                        .author("Robert C. Martin")
+                        .perdate(parseDate("2023-10-05"))
+                        .priceStandard(40000)
+                        .priceSales((int) (40000 * 0.5)) // condition "중" 기준
+                        .isbn("B003")
+                        .customerReviewRank(3)
+                        .description("Clean Code 소개")
+                        .link("http://example.com/clean-code")
+                        .bookType("베스트셀러")
+                        .displayType("중")
+                        .coverImg("http://example.com/images/clean-code.jpg")
+                        .salesPoint(1500)
+                        .categoryId(103L)
+                        .build()
         );
 
-        private static List<Book> availableBooks = new ArrayList<>(masterBooks);
 
-        static List<Book> getBooks(String searchType) {
+        // new Book("B006", "Java Master", "홍길동", 35000, "베스트셀러", "상", "2025-01-15", 1, 450),
+        // new Book("B007", "Java Master", "홍길동", 35000, "베스트셀러", "중", "2025-01-15", 1, 450),
+        // new Book("B008", "Effective Java", "Joshua Bloch", 45000, "베스트셀러", "상", "2024-12-01", 2, 380),
+        // new Book("B009", "Effective Java", "Joshua Bloch", 45000, "베스트셀러", "하", "2024-12-01", 2, 380),
+        // new Book("B010", "Clean Code", "Robert C. Martin", 40000, "베스트셀러", "중", "2023-10-05", 3, 420),
+        // new Book("B011", "Clean Code", "Robert C. Martin", 40000, "베스트셀러", "하", "2023-10-05", 3, 420),
+        // new Book("B012", "객체지향의 사실과 오해", "조영호", 22000, "베스트셀러", "하", "2022-08-12", 4, 250),
+        // new Book("B013", "객체지향의 사실과 오해", "조영호", 22000, "베스트셀러", "하", "2022-08-12", 4, 250),
+        // new Book("B014", "모던 자바스크립트 Deep Dive", "이웅모", 38000, "베스트셀러", "중", "2024-11-20", 5, 800),
+        // new Book("B015", "모던 자바스크립트 Deep Dive", "이웅모", 38000, "베스트셀러", "중", "2024-11-20", 5, 800),
+
+
+
+        // // 신간
+        // new Book("B101", "Spring Boot Guide", "이순신", 30000, "신간", "new", "2025-03-20", null, 320),
+        // new Book("B102", "Kotlin Programming", "김민준", 28000, "신간", "new", "2025-03-15", null, 280),
+        // new Book("B103", "Cloud Native Architecture", "박지성", 42000, "신간", "new", "2025-03-10", null, 350),
+        // new Book("B104", "인공지능과 머신러닝 기초", "최영희", 35000, "신간", "new", "2025-03-05", null, 420),
+        // new Book("B105", "블록체인 개발 실전 가이드", "정승호", 37000, "신간", "new", "2025-02-28", null, 380)
+
+        // // 웹개발
+        // new Book("B201", "React for Beginners", "Dan Abramov", 35000, "웹개발", "하", "2023-05-11", null, 300),
+        // new Book("B202", "Vue.js 완벽 가이드", "장영실", 28000, "웹개발", "new", "2025-02-28", null, 280),
+        // new Book("B203", "HTML/CSS 마스터", "구종만", 33000, "웹개발", "상", "2024-07-15", null, 350),
+        // new Book("B204", "Angular 실전 프로젝트", "이동욱", 45000, "웹개발", "new", "2024-09-30", null, 400),
+
+        // // 데이터베이스/백엔드
+        // new Book("B301", "SQL 레벨업", "미즈노 미츠히", 32000, "데이터베이스", "중", "2023-12-05", null, 320),
+        // new Book("B302", "MongoDB 완벽 가이드", "유진우", 37000, "데이터베이스", "new", "2024-01-20", null, 360),
+        // new Book("B303", "스프링 데이터 JPA", "김영한", 35000, "백엔드", "상", "2024-06-10", null, 380),
+        // new Book("B304", "Node.js 백엔드 개발", "이태호", 28000, "백엔드", "하", "2022-05-15", null, 290)
+        // );
+
+        private static List<BookListItemDto> availableBooks = new ArrayList<>(masterBooks);
+
+        static List<BookListItemDto> getBooks(String searchType) {
             return availableBooks.stream()
-                    .filter(book -> searchType.equals("전체") || book.types.equals(searchType))
+                    .filter(book -> searchType.equals("전체") || book.getDisplayType().equals(searchType))
                     .collect(Collectors.toList());
         }
 
-        static Book getBookById(String bookId) {
+        static BookListItemDto getBookById(String bookId) {
             return masterBooks.stream()
-                    .filter(book -> book.id.equals(bookId))
+                    .filter(book -> book.getBookId().equals(bookId))
                     .findFirst()
                     .orElse(null);
         }
 
         static void removeBook(String bookId) {
-            availableBooks.removeIf(book -> book.id.equals(bookId));
+            availableBooks.removeIf(book -> book.getBookId().equals(bookId));
         }
     }
 
     // 장바구니 아이템 클래스
     static class CartItem {
-        Book book;
+        BookListItemDto book;
         int quantity;
 
-        public CartItem(Book book, int quantity) {
-            this.book = book;
+        public CartItem(BookListItemDto book2, int quantity) {
+            this.book = book2;
             this.quantity = quantity;
         }
 
         public int getTotalPrice() {
-            return book.getPrice() * quantity;
+            return book.getPriceStandard() * quantity;
         }
     }
 
@@ -179,7 +314,7 @@ public class ViewMain {
     static class MockCartDB {
         private static List<CartItem> cart = new ArrayList<>();
 
-        static void addItem(Book book, int quantity) {
+        static void addItem(BookListItemDto book, int quantity) {
             cart.add(new CartItem(book, quantity));
         }
 
@@ -341,10 +476,10 @@ public class ViewMain {
         printHeader("온라인 서점 시스템");
         // ! 유저 - 로그인 서비스
         printSection("로그인");
+        System.out.print("성명: ");
+        scanner.nextLine();
         System.out.print("비밀번호: ");
         scanner.nextLine();
-
-
 
         home(scanner);
     }
@@ -412,25 +547,30 @@ public class ViewMain {
             String keyword = scanner.next();
             scanner.nextLine(); // 버퍼 비우기
 
-            List<Book> results = MockDB.getBooks(searchType).stream()
-                    .filter(book -> book.title.contains(keyword) || book.author.contains(keyword))
+            List<BookListItemDto> results = MockDB.getBooks(searchType).stream()
+                    .filter(book -> book.getTitle().contains(keyword) || book.getAuthor().contains(keyword))
                     .collect(Collectors.toList());
 
-            handleSearchResults(results, searchType, keyword, scanner);
+            handleSearchResults(searchType, keyword, scanner); // results,
         }
     }
 
-    private static void handleSearchResults(List<Book> books, String types, String keyword, Scanner scanner) {
+    private static void handleSearchResults(String types, String keyword, Scanner scanner) {
         clearScreen();
         printHeader("'" + keyword + "' 검색 결과 (" + types + ")");
 
-        // 추가 서비스 연결된 리스트
-        System.out.println("베스트");
-        frontController.selectBookListInBest("");
-        System.out.println("신간");
-        frontController.selectBookListInNew("");
-        list = frontController.selectBookList("");
+        List<BookListItemDto> books = new ArrayList<>(); // MockDB.getBooks(types).stream()
+        // if 조건문 주기 &&
+        if (types.equals("베스트셀러")) {
+            books = frontController.selectBookListInBest(keyword);
+        } else if (types.equals("신간")) {
+            books = frontController.selectBookListInNew(keyword);
+        } else if (types.equals("전체")) {
+            books = frontController.selectBookList(keyword);
+        }
 
+
+        // 추가 서비스 연결된 리스트
         // 검색 리스트 서비스 추가 필요
         if(books.isEmpty()) {
             System.out.println("\n[알림] 검색 결과가 없습니다");
@@ -448,9 +588,9 @@ public class ViewMain {
                 "3. 출판일 최신순"
         ));
 
-        if(types.equals("베스트셀러")) {
-            sortOptions.add("4. 리뷰 순위 순");
-        }
+        // if(types.equals("베스트셀러")) {
+        //     sortOptions.add("4. 리뷰 순위 순");
+        // }
         sortOptions.add("0. 홈으로 돌아가기");
         sortOptions.add("99. 종료");
 
@@ -481,9 +621,7 @@ public class ViewMain {
             case 0: return;
             case 1:
                 System.out.print(">> 도서 번호 입력: ");
-//                int bookNum = getValidNumber(scanner, 1, books.size());
                 int bookNum = scanner.nextInt();
-                scanner.nextLine(); // 버퍼 비우기
                 showBookDetail(bookNum, books.get(bookNum-1), scanner);
                 break;
             case 2: return; // 재검색
@@ -491,59 +629,72 @@ public class ViewMain {
         }
     }
 
-    private static void sortBooks(List<Book> books, int sortChoice, String types) {
+    private static void sortBooks(List<BookListItemDto> books, int sortChoice, String types) {
+        /*
+         *      1. 가격 낮은 순",
+                "2. 가격 높은 순",
+                "3. 출판일 최신순"
+         */
+
+         /*
+                case "perdateAsc" -> Comparator.comparing(BookListItemDto::getPerdate);
+                    case "perdateDesc" -> Comparator.comparing(BookListItemDto::getPerdate).reversed();
+                    case "priceStandardAsc" -> Comparator.comparing(BookListItemDto::getPriceStandard);
+                    case "priceStandardDesc" -> Comparator.comparing(BookListItemDto::getPriceStandard).reversed();
+                    default -> Comparator.comparing(BookListItemDto::getBookId); // 기본 정렬 (bookId 기준)
+          */
         // 소트 서비스 추가
-        System.out.println("수정 후");
-        System.out.println("출판일");
-        frontController.sortList("perdateAsc", list);
-        System.out.println("가격순");
-        frontController.sortList("priceStandardAsc", list);
+        // System.out.println("수정 후");
+        // System.out.println("출판일");
+        // frontController.sortList("perdateAsc", list);
+        // System.out.println("가격순");
+        // frontController.sortList("priceStandardAsc", list);
 
         // 기존 소트 뷰
         System.out.println("수정 전");
         switch(sortChoice) {
             case 1:
-                books.sort(Comparator.comparingInt(Book::getPrice));
+                frontController.sortList("priceStandardAsc", list);
                 break;
             case 2:
-                books.sort((b1, b2) -> b2.getPrice() - b1.getPrice());
+                frontController.sortList("priceStandardDesc", list);
                 break;
             case 3:
-                books.sort((b1, b2) -> b2.publicationDate.compareTo(b1.publicationDate));
+                frontController.sortList("perdateAsc", list);
                 break;
-            case 4:
-                if(types.equals("베스트셀러")) {
-                    books.sort(Comparator.comparingInt(b -> b.reviewRank != null ? b.reviewRank : Integer.MAX_VALUE));
-                }
-                break;
+            // case 4:
+            //     if(types.equals("베스트셀러")) {
+            //         books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getCustomerReviewRank() != null ? b.getCustomerReviewRank() : Integer.MAX_VALUE)));
+
+            //     }
+            //     break;
             default:
-                books.sort(Comparator.comparing(b -> b.title));
+                books.sort(Comparator.nullsFirst(Comparator.comparing(b -> b.getTitle(), Comparator.nullsLast(Comparator.naturalOrder()))));
         }
     }
 
-    private static void displayBooks(List<Book> books) {
+    private static void displayBooks(List<BookListItemDto> books) {
         int index = 1;
         // 기존 뷰 더미데이터
-        for(Book book : books) {
-            System.out.printf("\n%d. %s\n", index++, book.title);
-            System.out.printf("|- ID: %s\n", book.id);
-            System.out.printf("|- 저자: %s\n", book.author);
-            System.out.printf("|- 가격: %,d원\n", book.getPrice());
-            System.out.printf("|- 상태: %s\n", getConditionText(book.condition));
-            System.out.printf("|- 출판일: %s\n", book.publicationDate);
-            System.out.printf("|- 페이지: %d페이지\n", book.pageCount);
-            if(book.reviewRank != null) {
-                System.out.printf("|- 리뷰 순위: %d위\n", book.reviewRank);
+        for(BookListItemDto book : books) {
+            System.out.printf("\n%d. %s\n", index++, book.getTitle());
+            System.out.printf("|- ID: %s\n", book.getBookId());
+            System.out.printf("|- 저자: %s\n", book.getAuthor());
+            System.out.printf("|- 가격: %,d원\n", book.getPriceStandard());
+            System.out.printf("|- 상태: %s\n", getConditionText(book.getDisplayType()));
+            System.out.printf("|- 출판일: %s\n", book.getPerdate());
+            System.out.printf("|- 페이지: %d페이지\n", new Random().nextInt(901)+ 100); // book.pageCount
+            if(book.getCustomerReviewRank() != null) {
+                System.out.printf("|- 리뷰 순위: %d위\n", book.getCustomerReviewRank());
             }
             System.out.println(SUB_BORDER);
         }
         // 추가 서비스 연결된 리스트
-        // 추가 서비스 연결된 리스트
-        System.out.println("베스트");
-        frontController.selectBookListInBest("");
-        System.out.println("신간");
-        frontController.selectBookListInNew("");
-        frontController.selectBookList("");
+        // System.out.println("베스트");
+        // frontController.selectBookListInBest("");
+        // System.out.println("신간");
+        // frontController.selectBookListInNew("");
+        // frontController.selectBookList("");
     }
 
     private static String getConditionText(String condition) {
@@ -556,26 +707,10 @@ public class ViewMain {
         };
     }
 
-    private static void showBookDetail(int bookId, Book book, Scanner scanner) {
+    private static void showBookDetail(int bookId, BookListItemDto book, Scanner scanner) {
         clearScreen();
         // 상세보기 수정 후
-        Optional<BookInfoDetailResponseDto> bookInfoDetailResponseDto = frontController.selectBookDetail(bookId);
-        int priceStandard = bookInfoDetailResponseDto.get().getPriceStandard();
-        System.out.println("priceStandard = " + priceStandard);
-
-        // 수정 전
-        printHeader("[상세 정보] " + book.title);
-        System.out.printf("|- ISBN: %s\n", book.id);
-        System.out.printf("|- 저자: %s\n", book.author);
-        System.out.printf("|- 정가: %,d원\n", book.basePrice);
-        System.out.printf("|- 판매가: %,d원\n", book.getPrice());
-        System.out.printf("|- 상태: %s\n", getConditionText(book.condition));
-        System.out.printf("|- 출판일: %s\n", book.publicationDate);
-        System.out.printf("|- 페이지: %d페이지\n", book.pageCount);
-        if(book.reviewRank != null) {
-            System.out.printf("|- 리뷰 순위: %d위\n", book.reviewRank);
-        }
-        System.out.println(SUB_BORDER);
+        frontController.selectBookDetail(bookId);
 
         printMenu(new String[]{
                 "1. 장바구니 추가",
@@ -589,35 +724,32 @@ public class ViewMain {
 
         switch(choice) {
             case 0: return;
-            case 1: handleAddToCart(priceStandard, bookId ,book, scanner); break;
+            case 1: handleAddToCart(book, scanner); break;
             case 2: processPurchase(book, scanner); break;
             case 99: exit(scanner); break;
         }
     }
 
-    private static void handleAddToCart(int priceStandard, int bookId, Book book, Scanner scanner) {
-        System.out.print("\n>> 구입하고 싶은 중고 책의 상태 입력: ");
-        String status = scanner.nextLine();
+    private static void handleAddToCart(BookListItemDto book, Scanner scanner) {
         System.out.print("\n>> 수량 입력: ");
-        scanner.nextInt();
+        // 수량도 일단 해당 erd에서 만들수 있도록한다.
         int quantity = getValidNumber(scanner, 1, 10);
-        // 장바구니 추가 서비스 코드
-        frontController.insertItemInCart(userId, status, bookId, quantity);
+        // 카트 담는 로직
 
-        MockCartDB.addItem(book, quantity);
-        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.title, quantity);
+        //frontController.
+        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.getTitle(), quantity);
         System.out.println("[독서 통계] " + getRandomStatistic(quantity));
         pause(scanner);
     }
 
-    private static void processPurchase(Book book, Scanner scanner) {
+    private static void processPurchase(BookListItemDto book, Scanner scanner) {
         System.out.print("\n>> 수량 입력: ");
         int quantity = getValidNumber(scanner, 1, 10);
 
         System.out.println("\n================ 결제 정보 ================");
-        System.out.printf("도서명: %s\n", book.title);
+        System.out.printf("도서명: %s\n", book.getTitle());
         System.out.printf("수량: %d권\n", quantity);
-        System.out.printf("결제금액: %,d원\n", book.getPrice() * quantity);
+        System.out.printf("결제금액: %,d원\n", book.getPriceStandard() * quantity);
         System.out.println("-----------------------------------------");
 
         System.out.print("배송지 주소: ");
@@ -645,7 +777,7 @@ public class ViewMain {
             System.out.printf("[주문번호] %s\n", orderId);
 
             // 재고 감소
-            MockDB.removeBook(book.id);
+            MockDB.removeBook(String.valueOf(book.getBookId()));
 
             // 동적 통계 메시지 출력
             System.out.println("[독서 통계] " + getRandomStatistic(quantity));
@@ -660,8 +792,6 @@ public class ViewMain {
             printHeader("장바구니 관리");
             List<CartItem> cart = MockCartDB.getCart();
 
-            frontController.selectCart(101);
-
             if(cart.isEmpty()) {
                 System.out.println("\n[알림] 장바구니가 비어 있습니다");
                 pause(scanner);
@@ -669,9 +799,9 @@ public class ViewMain {
             }
 
             cart.forEach(item -> {
-                System.out.printf("\n[도서] %s\n", item.book.title);
+                System.out.printf("\n[도서] %s\n", item.book.getTitle());
                 System.out.printf("|- 수량: %d개\n", item.quantity);
-                System.out.printf("|- 단가: %,d원\n", item.book.getPrice());
+                System.out.printf("|- 단가: %,d원\n", item.book.getPriceStandard());
                 System.out.printf("|- 소계: %,d원\n", item.getTotalPrice());
                 System.out.println(SUB_BORDER);
             });
@@ -734,7 +864,7 @@ public class ViewMain {
             System.out.printf("[주문번호] %s\n", orderId);
 
             // 구매한 모든 책 재고에서 제거
-            cart.forEach(item -> MockDB.removeBook(item.book.id));
+            cart.forEach(item -> MockDB.removeBook(String.valueOf(item.book.getBookId())));
             MockCartDB.clearCart();
 
             // 동적 통계 메시지 출력
@@ -809,9 +939,11 @@ public class ViewMain {
         for(int i=0; i<order.items.size(); i++) {
             OrderItem item = order.items.get(i);
             System.out.printf("%d. %s | 저자: %s | 수량: %d개 | 가격: %,d원 | 소계: %,d원\n",
-                    i+1, item.book.title, item.book.author, item.quantity,
+                    i+1, item.book.getTitle(), item.book.getAuthor(), item.quantity,
                     item.priceAtPurchase, item.getTotalPrice());
-            totalPages += item.book.pageCount * item.quantity;
+            // totalPages += item.book.pageCount * item.quantity;
+            totalPages += (new Random().nextInt(851) + 150) * item.quantity;
+
         }
 
         System.out.printf("\n|- 총 페이지 수: %d페이지\n", totalPages);
@@ -856,7 +988,7 @@ public class ViewMain {
 
                 for(OrderItem item : order.items) {
                     System.out.printf("%s x %d권 = %,d원\n",
-                            item.book.title, item.quantity, item.getTotalPrice());
+                            item.book.getTitle(), item.quantity, item.getTotalPrice());
                 }
 
                 System.out.println(SUB_BORDER);
