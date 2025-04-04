@@ -240,6 +240,7 @@ public class ViewMain {
                             .categoryId(103L)
                             .build()
         );
+        
 
                 // new Book("B006", "Java Master", "홍길동", 35000, "베스트셀러", "상", "2025-01-15", 1, 450),
                 // new Book("B007", "Java Master", "홍길동", 35000, "베스트셀러", "중", "2025-01-15", 1, 450),
@@ -941,7 +942,9 @@ public class ViewMain {
             System.out.printf("%d. %s | 저자: %s | 수량: %d개 | 가격: %,d원 | 소계: %,d원\n",
                     i+1, item.book.getTitle(), item.book.getAuthor(), item.quantity,
                     item.priceAtPurchase, item.getTotalPrice());
-            totalPages += item.book.pageCount * item.quantity;
+            // totalPages += item.book.pageCount * item.quantity;
+            totalPages += (new Random().nextInt(851) + 150) * item.quantity;
+
         }
 
         System.out.printf("\n|- 총 페이지 수: %d페이지\n", totalPages);
