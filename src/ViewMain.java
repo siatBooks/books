@@ -859,10 +859,6 @@ public class ViewMain {
             System.out.println(SUB_BORDER);
 
             
-
-
-
-
             // 랜덤 출판 트렌드 메시지 출력
             System.out.println("[출판 트렌드] " + getRandomMessage(TREND_MESSAGES));
 
