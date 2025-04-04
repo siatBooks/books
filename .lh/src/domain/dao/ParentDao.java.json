@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/domain/dao/ParentDao.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1743736783538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1743736783538,
+            "name": "Commit-0",
+            "content": "package domain.dao;\r\n\r\npublic class ParentDao {\r\n//    public static final String DRIVER = \"org.h2.Driver\";\r\n//    public static final String URL = \"jdbc:h2:tcp://localhost/~/books\";\r\n//    public static final String USER = \"sa\";\r\n//    public static final String PASSWORD = \"\";\r\n    public static final String DRIVER = \"oracle.jdbc.driver.OracleDriver\";\r\n    public static final String URL = \"jdbc:oracle:thin:@localhost:1521/xe\";\r\n    public static final String USER = \"hr\";\r\n    public static final String PASSWORD = \"hr\";\r\n\r\n    public ParentDao() {\r\n        try {\r\n            Class.forName(DRIVER);\r\n            System.out.println(\"1. driver loading ok!\");\r\n        } catch (ClassNotFoundException e) {\r\n            throw new RuntimeException(e);\r\n        }\r\n    }\r\n}\r\n\r\n"
+        }
+    ]
+}

@@ -60,7 +60,8 @@ public class BookDao extends ParentDao{
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT * FROM BOOK_INFO WHERE DISPLAY_TYPE != 'NEW' AND TITLE LIKE ?";
+        String selectSQL = "SELECT * FROM BOOK_INFO bi FULL JOIN BOOK_ITEM bi2 ON(bi.BOOK_ID = bi2.BOOK_ID) WHERE DISPLAY_TYPE = 'BEST' AND TITLE LIKE ?";
+        
         ResultSet rset = null;
 
         try {

@@ -681,7 +681,7 @@ public class ViewMain {
             System.out.printf("|- ID: %s\n", book.getBookId());
             System.out.printf("|- 저자: %s\n", book.getAuthor());
             System.out.printf("|- 가격: %,d원\n", book.getPriceStandard());
-            System.out.printf("|- 상태: %s\n", getConditionText(book.getDisplayType()));
+            System.out.printf("|- 상태: %s\n", getConditionText(book.getBookType()));
             System.out.printf("|- 출판일: %s\n", book.getPerdate());
             System.out.printf("|- 페이지: %d페이지\n", new Random().nextInt(901)+ 100); // book.pageCount
             if(book.getCustomerReviewRank() != null) {
@@ -698,12 +698,16 @@ public class ViewMain {
     }
 
     private static String getConditionText(String condition) {
+        if (condition == null || condition.isEmpty()) {
+            condition = "";
+        }
         return switch(condition) {
-            case "new" -> "신상품";
-            case "상" -> "중고-상";
-            case "중" -> "중고-중";
-            case "하" -> "중고-하";
-            default -> "알 수 없음";
+            case "최상" -> "빛나는 서적";
+            case "상" -> "맑은 서적";
+            case "중" -> "흐린 서적";
+            case "하" -> "바랜 서적";
+            case ""  -> "의문의 서적";
+            default -> "의문의 서적";
         };
     }
 
@@ -713,6 +717,34 @@ public class ViewMain {
         Optional<BookInfoDetailResponseDto> bookInfoDetailResponseDto = frontController.selectBookDetail(bookId);
         Integer priceStandard = bookInfoDetailResponseDto.get().getPriceStandard();
         String bookName = bookInfoDetailResponseDto.get().getTitle();
+
+
+        System.out.println("\n================ 도서 상세 정보 ================");
+        System.out.printf("도서명: %s\n", bookInfoDetailResponseDto.get().getTitle());
+        System.out.printf("저자: %s\n", bookInfoDetailResponseDto.get().getAuthor());
+        System.out.printf("가격: %,d원\n", bookInfoDetailResponseDto.get().getPriceStandard());
+        System.out.printf("상태: %s\n", bookInfoDetailResponseDto.get().getBookType());
+        System.out.printf("출판일: %s\n", bookInfoDetailResponseDto.get().getPerdate());
+        System.out.printf("페이지: %d페이지\n", new Random().nextInt(901)+ 100); // bookInfoDetailResponseDto.get().getPageCount()
+        System.out.printf("ISBN: %s\n", bookInfoDetailResponseDto.get().getIsbn());
+        System.out.printf("리뷰 순위: %d위\n", bookInfoDetailResponseDto.get().getCustomerReviewRank());
+        System.out.printf("설명: %s\n", bookInfoDetailResponseDto.get().getDescription());
+        System.out.printf("링크: %s\n", bookInfoDetailResponseDto.get().getLink());
+        System.out.printf("판매 포인트: %d점\n", bookInfoDetailResponseDto.get().getSalesPoint());
+        System.out.printf("카테고리 ID: %d\n", bookInfoDetailResponseDto.get().getCategoryId());
+        System.out.println(SUB_BORDER);
+        System.out.printf("책 표지: %s\n", bookInfoDetailResponseDto.get().getCoverImg());
+        System.out.println(SUB_BORDER);
+
+        // 책가격에 따른 상태별 가격
+        System.out.println("\n================ 가격 정보 ================");
+        System.out.printf("상태별 가격: \n");
+        System.out.printf("최상: %, d원\n", (int)(priceStandard * 0.8));
+        System.out.printf("상: %, d원\n", (int)(priceStandard * 0.6));
+        System.out.printf("중: %, d원\n", (int)(priceStandard * 0.5));
+        System.out.printf("하: %, d원\n", (int)(priceStandard * 0.4));
+        
+        
 
         printMenu(new String[]{
                 "1. 장바구니 추가",
