@@ -590,9 +590,9 @@ public class ViewMain {
                 "3. 출판일 최신순"
         ));
 
-        if(types.equals("베스트셀러")) {
-            sortOptions.add("4. 리뷰 순위 순");
-        }
+        // if(types.equals("베스트셀러")) {
+        //     sortOptions.add("4. 리뷰 순위 순");
+        // }
         sortOptions.add("0. 홈으로 돌아가기");
         sortOptions.add("99. 종료");
 
@@ -646,11 +646,11 @@ public class ViewMain {
                     default -> Comparator.comparing(BookListItemDto::getBookId); // 기본 정렬 (bookId 기준)
           */
         // 소트 서비스 추가
-        System.out.println("수정 후");
-        System.out.println("출판일");
-        frontController.sortList("perdateAsc", list);
-        System.out.println("가격순");
-        frontController.sortList("priceStandardAsc", list);
+        // System.out.println("수정 후");
+        // System.out.println("출판일");
+        // frontController.sortList("perdateAsc", list);
+        // System.out.println("가격순");
+        // frontController.sortList("priceStandardAsc", list);
 
         // 기존 소트 뷰
         System.out.println("수정 전");
@@ -664,12 +664,12 @@ public class ViewMain {
             case 3:
                 frontController.sortList("perdateAsc", list);
                 break;
-            case 4:
-                if(types.equals("베스트셀러")) {
-                    books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getCustomerReviewRank() != null ? b.getCustomerReviewRank() : Integer.MAX_VALUE)));
+            // case 4:
+            //     if(types.equals("베스트셀러")) {
+            //         books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getCustomerReviewRank() != null ? b.getCustomerReviewRank() : Integer.MAX_VALUE)));
                         
-                }
-                break;
+            //     }
+            //     break;
             default:
                 books.sort(Comparator.nullsFirst(Comparator.comparing(b -> b.getTitle(), Comparator.nullsLast(Comparator.naturalOrder()))));
         }
