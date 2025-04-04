@@ -62,10 +62,10 @@ public class FrontController {
         return cartController.selectCart(userId);
     }
 
-    public int insertItemInCart(int bookId, int qty){
+    public int insertItemInCart(int userId, String status, int bookId, int qty){
         CartController cartController = (CartController) factory.getController("cart");
 
-        return cartController.insertItemInCart(bookId, qty);
+        return cartController.insertItemInCart(userId, status, bookId, qty);
     }
 
 

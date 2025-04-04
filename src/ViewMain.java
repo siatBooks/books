@@ -1,4 +1,5 @@
 import controller.FrontController;
+import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
 
 import java.util.*;
@@ -10,6 +11,10 @@ import java.util.stream.Collectors;
 public class ViewMain {
     private static FrontController frontController = new FrontController();
     private static List<BookListItemDto> list = new ArrayList<>();
+
+    private static int userId = 1;
+
+
 
     private static final Random random = new Random();
     private static final String BORDER = "==================================================";
@@ -336,10 +341,10 @@ public class ViewMain {
         printHeader("온라인 서점 시스템");
         // ! 유저 - 로그인 서비스
         printSection("로그인");
-        System.out.print("성명: ");
-        scanner.nextLine();
         System.out.print("비밀번호: ");
         scanner.nextLine();
+
+
 
         home(scanner);
     }
@@ -476,7 +481,9 @@ public class ViewMain {
             case 0: return;
             case 1:
                 System.out.print(">> 도서 번호 입력: ");
-                int bookNum = getValidNumber(scanner, 1, books.size());
+//                int bookNum = getValidNumber(scanner, 1, books.size());
+                int bookNum = scanner.nextInt();
+                scanner.nextLine(); // 버퍼 비우기
                 showBookDetail(bookNum, books.get(bookNum-1), scanner);
                 break;
             case 2: return; // 재검색
@@ -552,7 +559,9 @@ public class ViewMain {
     private static void showBookDetail(int bookId, Book book, Scanner scanner) {
         clearScreen();
         // 상세보기 수정 후
-        frontController.selectBookDetail(bookId);
+        Optional<BookInfoDetailResponseDto> bookInfoDetailResponseDto = frontController.selectBookDetail(bookId);
+        int priceStandard = bookInfoDetailResponseDto.get().getPriceStandard();
+        System.out.println("priceStandard = " + priceStandard);
 
         // 수정 전
         printHeader("[상세 정보] " + book.title);
@@ -580,17 +589,20 @@ public class ViewMain {
 
         switch(choice) {
             case 0: return;
-            case 1: handleAddToCart(bookId ,book, scanner); break;
+            case 1: handleAddToCart(priceStandard, bookId ,book, scanner); break;
             case 2: processPurchase(book, scanner); break;
             case 99: exit(scanner); break;
         }
     }
 
-    private static void handleAddToCart(int bookId, Book book, Scanner scanner) {
+    private static void handleAddToCart(int priceStandard, int bookId, Book book, Scanner scanner) {
+        System.out.print("\n>> 구입하고 싶은 중고 책의 상태 입력: ");
+        String status = scanner.nextLine();
         System.out.print("\n>> 수량 입력: ");
+        scanner.nextInt();
         int quantity = getValidNumber(scanner, 1, 10);
         // 장바구니 추가 서비스 코드
-        frontController.insertItemInCart(bookId, quantity);
+        frontController.insertItemInCart(userId, status, bookId, quantity);
 
         MockCartDB.addItem(book, quantity);
         System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.title, quantity);

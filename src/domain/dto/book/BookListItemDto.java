@@ -1,10 +1,12 @@
 package domain.dto.book;
 
+import domain.dto.cart.CartSelectResponseDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ToString
@@ -25,4 +27,5 @@ public class BookListItemDto {
     private String coverImg;
     private Integer salesPoint;
     private Long categoryId;
+
 }

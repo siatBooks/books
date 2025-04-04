@@ -23,8 +23,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int insertItemInCart(int bookId, int qty) {
-        return cartDao.insertItemInCart(bookId, qty);
+    public int insertItemInCart(int userId, String status, int bookId, int qty) {
+        return cartDao.insertItemInCart(userId, status, bookId, qty);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class CartController {
     };
 
     // 장바구니에 담기
-    public int insertItemInCart(int bookId, int qty){
-        return cartService.insertItemInCart(bookId, qty);
+    public int insertItemInCart(int userId, String status, int bookId, int qty){
+        return cartService.insertItemInCart(userId, status, bookId, qty);
     };
 
     // 장바구니 수정
