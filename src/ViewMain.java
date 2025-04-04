@@ -632,6 +632,19 @@ public class ViewMain {
     }
 
     private static void sortBooks(List<BookListItemDto> books, int sortChoice, String types) {
+        /*
+         *      1. 가격 낮은 순",
+                "2. 가격 높은 순",
+                "3. 출판일 최신순"
+         */
+
+         /*
+                case "perdateAsc" -> Comparator.comparing(BookListItemDto::getPerdate);
+                    case "perdateDesc" -> Comparator.comparing(BookListItemDto::getPerdate).reversed();
+                    case "priceStandardAsc" -> Comparator.comparing(BookListItemDto::getPriceStandard);
+                    case "priceStandardDesc" -> Comparator.comparing(BookListItemDto::getPriceStandard).reversed();
+                    default -> Comparator.comparing(BookListItemDto::getBookId); // 기본 정렬 (bookId 기준)
+          */
         // 소트 서비스 추가
         System.out.println("수정 후");
         System.out.println("출판일");
@@ -643,17 +656,18 @@ public class ViewMain {
         System.out.println("수정 전");
         switch(sortChoice) {
             case 1:
-                books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getPriceStandard() != null ? b.getPriceStandard() : 0)));
+                frontController.sortList("priceStandardAsc", list);
                 break;
             case 2:
-                books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> ((BookInfoDetailResponseDto) b).getPriceStandard() != null ? ((BookInfoDetailResponseDto) b).getPriceStandard() : 0)).reversed());
+                frontController.sortList("priceStandardDesc", list);            
                 break;
             case 3:
-                books.sort(Comparator.nullsFirst(Comparator.comparing(b -> ((BookInfoDetailResponseDto) b).getPerdate(), Comparator.nullsLast(Comparator.naturalOrder()))).reversed());
+                frontController.sortList("perdateAsc", list);
                 break;
             case 4:
                 if(types.equals("베스트셀러")) {
                     books.sort(Comparator.nullsFirst(Comparator.comparingInt(b -> b.getCustomerReviewRank() != null ? b.getCustomerReviewRank() : Integer.MAX_VALUE)));
+                        
                 }
                 break;
             default:
