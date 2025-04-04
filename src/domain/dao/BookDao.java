@@ -106,7 +106,7 @@ public class BookDao extends ParentDao{
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT * FROM BOOK_INFO WHERE DISPLAY_TYPE = 'NEW' AND TITLE LIKE ?";
+        String selectSQL = "SELECT * FROM BOOK_INFO WHERE DISPLAY_TYPE = 'new' AND TITLE LIKE ?";
         ResultSet rset = null;
 
         try {

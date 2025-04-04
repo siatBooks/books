@@ -1,6 +1,8 @@
 import controller.FrontController;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
+import domain.dto.cart.CartSelectResponseDto;
+import domain.dto.cart.CartSelectResponseDto.BookCartDto;
 import oracle.net.aso.e;
 
 import java.util.*;
@@ -837,7 +839,29 @@ public class ViewMain {
             clearScreen();
             printHeader("장바구니 관리");
 
-            frontController.selectCart(1);
+            CartSelectResponseDto cart = frontController.selectCart(1);
+            if(cart.getBooks().isEmpty() || cart.getBooks() == null) {
+                System.out.println("\n[알림] 장바구니가 비어있습니다");
+                pause(scanner);
+                return;
+            }
+
+            System.out.println("\n================ 장바구니 정보 ================");
+            System.out.println("\n[장바구니 목록]");
+            System.out.printf("%-5s | %-10s | %-10s | %-10s%n", "번호", "책번호", "상태", "수량");
+            System.out.println(SUB_BORDER);
+
+            for (int i = 0; i < cart.getBooks().size(); i++) {
+                BookCartDto bookCart = cart.getBooks().get(i);
+                System.out.printf("%-5d | %-10s | %-10s | %-10d%n",
+                        i + 1, bookCart.getBookId(), bookCart.getStatus(), bookCart.getCartQty());
+            }
+            System.out.println(SUB_BORDER);
+
+            
+
+
+
 
             // 랜덤 출판 트렌드 메시지 출력
             System.out.println("[출판 트렌드] " + getRandomMessage(TREND_MESSAGES));

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1743736871366,
@@ -16,6 +16,10 @@
                 {
                     "date": 1743737087479,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,9 +80,9 @@\n                         .isbn(rset.getString(\"isbn\"))\r\n                         .customerReviewRank(rset.getInt(\"customer_review_rank\"))\r\n                         .description(rset.getString(\"description\"))\r\n                         .link(rset.getString(\"link\"))\r\n-                        .bookType(rset.getString(\"status\"))\r\n+                        .bookType(rset.getString(\"book_type\"))\r\n                         .displayType(rset.getString(\"display_type\"))\r\n                         .coverImg(rset.getString(\"coverImg\"))\r\n                         .salesPoint(rset.getInt(\"sales_point\"))\r\n                         .categoryId(rset.getLong(\"category_id\"))\r\n"
+                },
+                {
+                    "date": 1743738625874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,9 +105,9 @@\n         List list = new ArrayList<>();\r\n \r\n         Connection connection = null;\r\n         PreparedStatement preparedStatement = null;\r\n-        String selectSQL = \"SELECT * FROM BOOK_INFO WHERE DISPLAY_TYPE = 'NEW' AND TITLE LIKE ?\";\r\n+        String selectSQL = \"SELECT * FROM BOOK_INFO WHERE DISPLAY_TYPE = 'new' AND TITLE LIKE ?\";\r\n         ResultSet rset = null;\r\n \r\n         try {\r\n             connection = DriverManager.getConnection(URL, USER, PASSWORD);\r\n"
                 }
             ],
             "date": 1743736871366,
