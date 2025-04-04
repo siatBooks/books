@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1743688277686,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743725232404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,14 @@\n     // public static final String USER = \"sa\";\r\n     // public static final String PASSWORD = \"\";\r\n    public static final String DRIVER = \"oracle.jdbc.driver.OracleDriver\";\r\n    public static final String URL = \"jdbc:oracle:thin:@localhost:1521/xe\";\r\n-   public static final String USER = \"system\";\r\n-   public static final String PASSWORD = \"1234\";\r\n+   public static final String USER = \"hr\";\r\n+   public static final String PASSWORD = \"hr\";\r\n+//    public static final String DRIVER = \"oracle.jdbc.driver.OracleDriver\";\r\n+//    public static final String URL = \"jdbc:oracle:thin:@localhost:1521/xe\";\r\n+//    public static final String USER = \"system\";\r\n+//    public static final String PASSWORD = \"1234\";\r\n \r\n     public ParentDao() {\r\n         try {\r\n             Class.forName(DRIVER);\r\n"
                 }
             ],
             "date": 1743688277686,

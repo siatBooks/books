@@ -493,7 +493,7 @@ public class ViewMain {
         }
     }
 
-    private static void sortBooks(List<BookInfoDetailResponseDto> books, int sortChoice, String types) {
+    private static void sortBooks(List<BookListItemDto> books, int sortChoice, String types) {
         // 소트 서비스 추가
         System.out.println("수정 후");
         System.out.println("출판일");
@@ -594,23 +594,26 @@ public class ViewMain {
         }
     }
 
-    private static void handleAddToCart(Book book, Scanner scanner) {
+    private static void handleAddToCart(BookListItemDto book, Scanner scanner) {
         System.out.print("\n>> 수량 입력: ");
+        // 수량도 일단 해당 erd에서 만들수 있도록한다.
         int quantity = getValidNumber(scanner, 1, 10);
-        MockCartDB.addItem(book, quantity);
-        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.title, quantity);
+        // 카트 담는 로직
+
+         //frontController.
+        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.getTitle(), quantity);
         System.out.println("[독서 통계] " + getRandomStatistic(quantity));
         pause(scanner);
     }
 
-    private static void processPurchase(Book book, Scanner scanner) {
+    private static void processPurchase(BookListItemDto book, Scanner scanner) {
         System.out.print("\n>> 수량 입력: ");
         int quantity = getValidNumber(scanner, 1, 10);
 
         System.out.println("\n================ 결제 정보 ================");
-        System.out.printf("도서명: %s\n", book.title);
+        System.out.printf("도서명: %s\n", book.getTitle());
         System.out.printf("수량: %d권\n", quantity);
-        System.out.printf("결제금액: %,d원\n", book.getPrice() * quantity);
+        System.out.printf("결제금액: %,d원\n", book.getPriceStandard() * quantity);
         System.out.println("-----------------------------------------");
 
         System.out.print("배송지 주소: ");
