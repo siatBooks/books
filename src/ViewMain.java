@@ -726,22 +726,22 @@ public class ViewMain {
 
         switch(choice) {
             case 0: return;
-            case 1: handleAddToCart(scanner); break;
+            case 1: handleAddToCart(bookId, bookInfoDetailResponseDto.get(), scanner); break;
             case 2: processPurchase(bookName, priceStandard, scanner); break;
             case 99: exit(scanner); break;
         }
     }
 
-    private static void handleAddToCart(Scanner scanner) {
+    private static void handleAddToCart(int bookId, BookInfoDetailResponseDto bookInfoDetailResponseDto, Scanner scanner) {
+        System.out.print("\n>> 구매하고 싶은 중고 책의 상태 입력: ");
+        String status = scanner.nextLine();
+        scanner.nextLine();
         System.out.print("\n>> 수량 입력: ");
         // 수량도 일단 해당 erd에서 만들수 있도록한다.
         int quantity = getValidNumber(scanner, 1, 10);
-        // 카트 담는 로직
 
-        //frontController.
-//        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.getTitle(), quantity);
-//        System.out.println("[독서 통계] " + getRandomStatistic(quantity));
-//        pause(scanner);
+        frontController.insertItemInCart(1, status, bookId, quantity);
+        System.out.println("장바구니 추가 완료");
     }
 
     private static void processPurchase(String bookName, int priceStandard, Scanner scanner) {
@@ -804,21 +804,8 @@ public class ViewMain {
         while(true) {
             clearScreen();
             printHeader("장바구니 관리");
-            List<CartItem> cart = MockCartDB.getCart();
 
-            if(cart.isEmpty()) {
-                System.out.println("\n[알림] 장바구니가 비어 있습니다");
-                pause(scanner);
-                return;
-            }
-
-            cart.forEach(item -> {
-                System.out.printf("\n[도서] %s\n", item.book.getTitle());
-                System.out.printf("|- 수량: %d개\n", item.quantity);
-                System.out.printf("|- 단가: %,d원\n", item.book.getPriceStandard());
-                System.out.printf("|- 소계: %,d원\n", item.getTotalPrice());
-                System.out.println(SUB_BORDER);
-            });
+            frontController.selectCart(1);
 
             // 랜덤 출판 트렌드 메시지 출력
             System.out.println("[출판 트렌드] " + getRandomMessage(TREND_MESSAGES));

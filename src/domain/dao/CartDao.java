@@ -67,7 +67,7 @@ public class CartDao extends ParentDao {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT * FROM BOOK_CART WHERE CART_ID = 101";
+        String selectSQL = "SELECT * FROM BOOK_CART WHERE CART_ID = 1";
         ResultSet rset = null;
 
         try {
