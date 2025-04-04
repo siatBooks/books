@@ -622,7 +622,7 @@ public class ViewMain {
             case 1:
                 System.out.print(">> 도서 번호 입력: ");
                 int bookNum = scanner.nextInt();
-                showBookDetail(bookNum, books.get(bookNum-1), scanner);
+                showBookDetail(bookNum, scanner);
                 break;
             case 2: return; // 재검색
             case 99: exit(scanner); break;
@@ -707,10 +707,12 @@ public class ViewMain {
         };
     }
 
-    private static void showBookDetail(int bookId, BookListItemDto book, Scanner scanner) {
+    private static void showBookDetail(int bookId, Scanner scanner) {
         clearScreen();
         // 상세보기 수정 후
-        frontController.selectBookDetail(bookId);
+        Optional<BookInfoDetailResponseDto> bookInfoDetailResponseDto = frontController.selectBookDetail(bookId);
+        Integer priceStandard = bookInfoDetailResponseDto.get().getPriceStandard();
+        String bookName = bookInfoDetailResponseDto.get().getTitle();
 
         printMenu(new String[]{
                 "1. 장바구니 추가",
@@ -724,33 +726,47 @@ public class ViewMain {
 
         switch(choice) {
             case 0: return;
-            case 1: handleAddToCart(book, scanner); break;
-            case 2: processPurchase(book, scanner); break;
+            case 1: handleAddToCart(scanner); break;
+            case 2: processPurchase(bookName, priceStandard, scanner); break;
             case 99: exit(scanner); break;
         }
     }
 
-    private static void handleAddToCart(BookListItemDto book, Scanner scanner) {
+    private static void handleAddToCart(Scanner scanner) {
         System.out.print("\n>> 수량 입력: ");
         // 수량도 일단 해당 erd에서 만들수 있도록한다.
         int quantity = getValidNumber(scanner, 1, 10);
         // 카트 담는 로직
 
         //frontController.
-        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.getTitle(), quantity);
-        System.out.println("[독서 통계] " + getRandomStatistic(quantity));
-        pause(scanner);
+//        System.out.printf("\n[완료] %s %d권 장바구니 추가 완료!\n", book.getTitle(), quantity);
+//        System.out.println("[독서 통계] " + getRandomStatistic(quantity));
+//        pause(scanner);
     }
 
-    private static void processPurchase(BookListItemDto book, Scanner scanner) {
+    private static void processPurchase(String bookName, int priceStandard, Scanner scanner) {
+        double percent = 1;
+        System.out.print("\n>> 구매하고 싶은 중고 책의 상태 입력: ");
+        String status = scanner.nextLine();
+        scanner.nextLine();
         System.out.print("\n>> 수량 입력: ");
         int quantity = getValidNumber(scanner, 1, 10);
 
+        switch (status) {
+            case "최상" : percent = 0.8;
+            case "상" : percent = 0.6;
+            case "중" : percent = 0.5;
+            case "하" : percent = 0.4;
+        }
+
+        System.out.println("quantity = " + quantity);
+
         System.out.println("\n================ 결제 정보 ================");
-        System.out.printf("도서명: %s\n", book.getTitle());
-        System.out.printf("수량: %d권\n", quantity);
-        System.out.printf("결제금액: %,d원\n", book.getPriceStandard() * quantity);
-        System.out.println("-----------------------------------------");
+        System.out.printf("도서명: %s\n", bookName);
+        System.out.printf("상태: " + status);
+        System.out.printf("\n수량: %d권\n", quantity);
+        System.out.printf("결제금액: " + priceStandard * quantity * percent);
+        System.out.println("\n-----------------------------------------");
 
         System.out.print("배송지 주소: ");
         String address = scanner.nextLine();
@@ -764,20 +780,18 @@ public class ViewMain {
         System.out.print("\n>> 결제 방법 선택: ");
         int paymentType = getValidNumber(scanner, 0, 2);
 
+        BookListItemDto book = BookListItemDto.builder().build();
+
         if(paymentType != 0) {
             String paymentMethod = (paymentType == 1) ? "신용카드" : "계좌이체";
             System.out.println("[완료] 결제가 완료되었습니다!");
 
-            // 장바구니에 추가
-            List<CartItem> orderItems = new ArrayList<>();
-            orderItems.add(new CartItem(book, quantity));
-
             // 주문 생성
-            String orderId = MockOrderDB.addOrder("홍길동", orderItems, address, paymentMethod);
-            System.out.printf("[주문번호] %s\n", orderId);
+
+            System.out.printf("주문이 완료되었습니다");
+            System.out.printf("[주문번호] 1\n");
 
             // 재고 감소
-            MockDB.removeBook(String.valueOf(book.getBookId()));
 
             // 동적 통계 메시지 출력
             System.out.println("[독서 통계] " + getRandomStatistic(quantity));
