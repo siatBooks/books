@@ -1,6 +1,9 @@
 import controller.FrontController;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
+import domain.dto.cart.CartSelectResponseDto;
+import domain.dto.order.OrderDetailByCartRequestDto;
+import domain.dto.order.OrderHistoryListItemResponseDto;
 import oracle.net.aso.e;
 
 import java.util.*;
@@ -733,6 +736,7 @@ public class ViewMain {
     }
 
     private static void handleAddToCart(int bookId, BookInfoDetailResponseDto bookInfoDetailResponseDto, Scanner scanner) {
+        double percent = 1;
         System.out.print("\n>> 구매하고 싶은 중고 책의 상태 입력: ");
         String status = scanner.nextLine();
         scanner.nextLine();
@@ -740,7 +744,14 @@ public class ViewMain {
         // 수량도 일단 해당 erd에서 만들수 있도록한다.
         int quantity = getValidNumber(scanner, 1, 10);
 
-        frontController.insertItemInCart(1, status, bookId, quantity);
+        switch (status) {
+            case "최상" : percent = 0.8;
+            case "상" : percent = 0.6;
+            case "중" : percent = 0.5;
+            case "하" : percent = 0.4;
+        }
+
+        frontController.insertItemInCart(bookInfoDetailResponseDto.getPriceStandard()*percent,1, status, bookId, quantity);
         System.out.println("장바구니 추가 완료");
     }
 
@@ -805,8 +816,9 @@ public class ViewMain {
             clearScreen();
             printHeader("장바구니 관리");
 
-            frontController.selectCart(1);
+            CartSelectResponseDto cartSelectResponseDto = frontController.selectCart(1);
 
+            System.out.println("cartSelectResponseDto = " + cartSelectResponseDto);
             // 랜덤 출판 트렌드 메시지 출력
             System.out.println("[출판 트렌드] " + getRandomMessage(TREND_MESSAGES));
 
@@ -822,7 +834,7 @@ public class ViewMain {
 
             switch(choice) {
                 case 0: return;
-                case 1: processBulkPurchase(scanner); break;
+                case 1: processBulkPurchase(cartSelectResponseDto, scanner); break;
                 case 2:
                     MockCartDB.clearCart();
                     System.out.println("\n[완료] 장바구니를 비웠습니다");
@@ -834,14 +846,9 @@ public class ViewMain {
     }
 
     // 일괄 구매 처리
-    private static void processBulkPurchase(Scanner scanner) {
-        List<CartItem> cart = MockCartDB.getCart();
-        int total = cart.stream().mapToInt(CartItem::getTotalPrice).sum();
-        int totalQuantity = cart.stream().mapToInt(item -> item.quantity).sum();
-
+    private static void processBulkPurchase(CartSelectResponseDto cartSelectResponseDto, Scanner scanner) {
         System.out.println("\n================ 결제 정보 ================");
-        System.out.printf("총 결제금액: %,d원\n", total);
-        System.out.printf("총 도서 수량: %d권\n", totalQuantity);
+        System.out.printf("총 결제금액: %,d원\n", cartSelectResponseDto.getCartTotalPrice());
         System.out.println("-----------------------------------------");
 
         System.out.print("배송지 주소: ");
@@ -861,16 +868,23 @@ public class ViewMain {
             System.out.println("[완료] 결제가 완료되었습니다!");
 
             // 주문 생성
-            String orderId = MockOrderDB.addOrder("홍길동", cart, address, paymentMethod);
-            System.out.printf("[주문번호] %s\n", orderId);
 
             // 구매한 모든 책 재고에서 제거
-            cart.forEach(item -> MockDB.removeBook(String.valueOf(item.book.getBookId())));
-            MockCartDB.clearCart();
 
             // 동적 통계 메시지 출력
-            System.out.println("[독서 통계] " + getRandomStatistic(totalQuantity));
         }
+        OrderDetailByCartRequestDto dto = OrderDetailByCartRequestDto.builder().orderDate(new Date())               // 주문 날짜 설정
+                .orderTotalPrice(cartSelectResponseDto.getCartTotalPrice())             // 주문 총 가격 설정
+                .userId(1)                        // 사용자 ID 설정
+                .cartId(1)                        // 카트 ID 설정
+                .orderAddress("Seoul, Korea")       // 주문 주소 설정
+                .status(cartSelectResponseDto.getBooks().get(0).getStatus())                  // 주문 상태 설정
+                .bookId(cartSelectResponseDto.getBooks().get(0).getBookId())                        // 책 ID 설정
+                .cartQty(cartSelectResponseDto.getBooks().get(0).getCartQty())                         // 카트 수량 설정
+                .build();                           // 객체 생성 완료
+
+
+        frontController.insertOrderByCart(dto);
         pause(scanner);
     }
 
@@ -880,28 +894,11 @@ public class ViewMain {
             clearScreen();
             printHeader("주문 이력 관리");
             printSection("구매 내역 및 주문 상태 확인");
-
-            List<Order> orders = MockOrderDB.getOrders();
-
-            if(orders.isEmpty()) {
-                System.out.println("\n[알림] 주문 내역이 없습니다");
-                pause(scanner);
-                return;
+            List<OrderHistoryListItemResponseDto> list1 = frontController.selectOrderHistory(1);
+            for (OrderHistoryListItemResponseDto i : list1) {
+                System.out.println(i);
             }
-
-            System.out.println("\n[주문 목록]");
-            for(int i=0; i<orders.size(); i++) {
-                Order order = orders.get(i);
-                System.out.printf("%d. 주문번호: %s | 고객명: %s | 주문일: %s | 상태: %s | 총액: %,d원\n",
-                        i+1, order.orderId, order.customerName, order.orderDate,
-                        order.status, order.totalAmount);
-            }
-
             printMenu(new String[]{
-                    "1. 주문 상세 조회",
-                    "2. 날짜별 검색",
-                    "3. 상태별 검색",
-                    "4. 월별 주문 통계",
                     "0. 홈으로 돌아가기",
                     "99. 종료"
             });
@@ -911,10 +908,6 @@ public class ViewMain {
 
             switch(choice) {
                 case 0: return;
-                case 1: viewOrderDetails(scanner, orders); break;
-                case 2: searchOrdersByDate(scanner); break;
-                case 3: searchOrdersByStatus(scanner); break;
-                case 4: showMonthlyOrderStats(scanner); break;
                 case 99: exit(scanner); break;
             }
         }

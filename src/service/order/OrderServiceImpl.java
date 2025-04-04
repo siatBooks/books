@@ -15,7 +15,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderHistoryListItemResponseDto> selectOrderHistory(int userId) {
-        return List.of();
+        return orderDao.selectRow();
     }
 
     @Override
@@ -24,8 +24,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDetailByCartResponseDto selectOrderDetailByCart(OrderDetailByCartRequestDto requestDto) {
-        return null;
+    public int insertOrderByCart(OrderDetailByCartRequestDto requestDto) {
+        int i = orderDao.insertOrder(requestDto.getOrderDate(), requestDto.getOrderTotalPrice(), requestDto.getUserId(), requestDto.getCartId(), requestDto.getOrderAddress());
+        return orderDao.insertBookOrder(requestDto.getStatus(), requestDto.getBookId(), i, requestDto.getCartQty());
     }
 
     @Override

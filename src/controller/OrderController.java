@@ -17,18 +17,14 @@ public class OrderController {
         return orderService.selectOrderHistory(userId);
     };
 
-    // 바로 구매하기 주문서 작성
+    // 바로 구매하기 주문
     public OrderDetailByDirectResponseDto selectOrderDetailByDirect(OrderDetailByDirectRequestDto requestDto){
         return orderService.selectOrderDetailByDirect(requestDto);
     };
 
-    // 장바구니로 부터 구매하기 주문서 작성
-    public OrderDetailByCartResponseDto selectOrderDetailByCart(OrderDetailByCartRequestDto requestDto){
-        return orderService.selectOrderDetailByCart(requestDto);
+    // 장바구니로부터 구매하기 주문
+    public int insertOrderByCart(OrderDetailByCartRequestDto requestDto){
+        return orderService.insertOrderByCart(requestDto);
     };
 
-    // 주문서 수정
-    public int updateOrder(OrderSheetUpdateDto dto){
-        return orderService.updateOrder(dto);
-    };
 }

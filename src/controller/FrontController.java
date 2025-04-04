@@ -3,6 +3,8 @@ package controller;
 import domain.dto.book.BookInfoDetailResponseDto;
 import domain.dto.book.BookListItemDto;
 import domain.dto.cart.CartSelectResponseDto;
+import domain.dto.order.OrderDetailByCartRequestDto;
+import domain.dto.order.OrderHistoryListItemResponseDto;
 import factory.BeanFactory;
 
 import java.util.List;
@@ -62,14 +64,24 @@ public class FrontController {
         return cartController.selectCart(userId);
     }
 
-    public int insertItemInCart(int userId, String status, int bookId, int qty){
+    public int insertItemInCart(double total, int userId, String status, int bookId, int qty){
         CartController cartController = (CartController) factory.getController("cart");
 
-        return cartController.insertItemInCart(userId, status, bookId, qty);
+        return cartController.insertItemInCart(total, userId, status, bookId, qty);
+    }
+
+    public int insertOrderByCart(OrderDetailByCartRequestDto dto) {
+        OrderController orderController = (OrderController) factory.getController("order");
+        return orderController.insertOrderByCart(dto);
     }
 
 
 
+    public List<OrderHistoryListItemResponseDto> selectOrderHistory(int userId) {
+        OrderController orderController = (OrderController) factory.getController("order");
+        return orderController.selectOrderHistory(userId);
+
+    }
 
 
 }

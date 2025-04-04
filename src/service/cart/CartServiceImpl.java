@@ -23,7 +23,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int insertItemInCart(int userId, String status, int bookId, int qty) {
+    public int insertItemInCart(double total, int userId, String status, int bookId, int qty) {
+        cartDao.sumPrice(total);
         return cartDao.insertItemInCart(userId, status, bookId, qty);
     }
 

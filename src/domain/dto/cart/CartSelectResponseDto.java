@@ -19,7 +19,7 @@ public class CartSelectResponseDto {
     @ToString
     public static class BookCartDto {
         private String status;
-        private Long bookId;
+        private int bookId;
         private Integer cartQty;
     }
 }

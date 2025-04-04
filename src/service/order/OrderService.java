@@ -14,7 +14,7 @@ public interface OrderService {
     OrderDetailByDirectResponseDto selectOrderDetailByDirect(OrderDetailByDirectRequestDto requestDto);
 
     // 장바구니로 부터 구매하기
-    OrderDetailByCartResponseDto selectOrderDetailByCart(OrderDetailByCartRequestDto requestDto);
+    int insertOrderByCart(OrderDetailByCartRequestDto requestDto);
 
     // 주문서 수정
     int updateOrder(OrderSheetUpdateDto dto);

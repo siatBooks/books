@@ -16,7 +16,7 @@ public interface CartService {
     CartSelectResponseDto selectCart(int userId);
 
     // 장바구니에 담기
-    int insertItemInCart(int userId, String status, int BookId, int qty);
+    int insertItemInCart(double total, int userId, String status, int BookId, int qty);
 
     // 장바구니 수정
     int updateCart(CartUpdateRequestDto dto);
